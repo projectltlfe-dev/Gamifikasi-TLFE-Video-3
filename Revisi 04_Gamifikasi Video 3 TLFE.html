@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gamifikasi Video 3 TLFE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#14151b;--panel-d:#3f4555;--panel-dd:#2b303c;--paper:#fffdf7;--orange:#f2792b;--blue:#3d7fd9;
+--good:#5fd68c;--red:#ff5a5a;--warn:#ffc94d;
+--blue-light:#d9ecff;--yellow-light:#fff0bd;--red-light:#ffd9d9;
+--hand:"Patrick Hand","Comic Sans MS","Chalkboard SE","Segoe Print",cursive;
+--round:"Fredoka","Nunito","Trebuchet MS",system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000;overflow:hidden;overscroll-behavior:none}
+body{font-family:var(--hand);color:var(--ink);-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-offset:3px}
+#app{position:fixed;inset:0;overflow:hidden;background:linear-gradient(180deg,#e4eef4 0%,#d5e3ec 62%,#c8d7e1 100%)}
+.wallpat{position:absolute;inset:0;background-image:radial-gradient(rgba(30,50,80,.07) 1.5px,transparent 1.7px);background-size:26px 26px}
+.glow{position:absolute;left:50%;top:52%;width:150vmax;height:150vmax;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,240,205,.45),transparent 32%);pointer-events:none}
+.vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 50%,rgba(40,35,25,.28))}
+.deco{display:none}
+#storeBg{position:absolute;inset:0;background:#cfd6dc}#storeBg svg{width:100%;height:100%;display:block}
+.desk::after{content:"";position:absolute;left:0;right:0;top:0;height:22%;background:#d9b080;border-bottom:3px solid var(--ink)}
+.scan,.cup{position:absolute;z-index:3;bottom:calc(28% - 8px);border:3px solid var(--ink)}
+.scan{left:5%;width:min(18vw,90px);height:min(7vh,40px);background:#3f4555;border-radius:10px 10px 4px 4px}
+.scan::after{content:"";position:absolute;left:12%;right:12%;top:30%;height:5px;border-radius:3px;background:#ff5a5a;box-shadow:0 0 8px #ff5a5a}
+.cup{right:6%;width:min(11vw,52px);height:min(8vh,46px);background:#e8645a;border-radius:4px 4px 10px 10px}
+.shelf{position:absolute;top:calc(16px + env(safe-area-inset-top));left:5%;width:min(34vw,220px);height:min(18vh,96px);border:4px solid var(--ink);border-radius:10px;background:#fff;box-shadow:0 5px 0 rgba(20,21,27,.2);overflow:hidden;display:flex;align-items:flex-end;justify-content:space-around;padding:6px;font-size:clamp(20px,5vw,32px)}
+.shelf::after{content:"";position:absolute;left:0;right:0;bottom:30%;height:5px;background:#a97d53;border-top:3px solid var(--ink)}
+.sign{position:absolute;top:calc(22px + env(safe-area-inset-top));right:calc(70px + 3%);padding:6px 12px;background:var(--orange);border:3px solid var(--ink);border-radius:10px;box-shadow:0 4px 0 var(--ink);font-family:var(--round);font-weight:700;font-size:clamp(11px,3vw,15px);transform:rotate(3deg)}
+.desk{position:absolute;left:-4%;right:-4%;bottom:0;height:28%;background:linear-gradient(#c99c6c,#a97d53);border-top:4px solid var(--ink)}
+.desk::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.22),transparent 55%)}
+
+/* buttons */
+.btn{font-family:var(--round);font-weight:600;font-size:16px;line-height:1.1;padding:10px 18px;border:2.5px solid var(--ink);border-radius:12px;background:var(--orange);color:var(--ink);box-shadow:0 4px 0 var(--ink);transition:transform .08s,box-shadow .08s}
+.btn:hover{filter:brightness(1.06)}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.btn.big{font-size:18px;padding:12px 22px;width:100%}
+.btn.ghost{background:#e9edf5}
+#audioToggleBtn{position:absolute;top:calc(10px + env(safe-area-inset-top));right:calc(10px + env(safe-area-inset-right));z-index:70;width:44px;height:44px;padding:0;display:grid;place-items:center;border-radius:50%;background:#ffd34d;box-shadow:0 3px 0 var(--ink)}
+#audioToggleBtn svg{width:22px;height:22px}
+#copy{position:absolute;left:0;right:0;bottom:calc(4px + env(safe-area-inset-bottom));z-index:65;text-align:center;font-family:var(--round);font-weight:500;font-size:10px;letter-spacing:.03em;color:rgba(255,255,255,.75);pointer-events:none}
+
+/* overlays */
+.ovl{position:absolute;inset:0;z-index:20;display:grid;place-items:center;padding:18px;opacity:0;pointer-events:none;transition:opacity .4s}
+.ovl.show{opacity:1;pointer-events:auto}
+.ovl.dim{background:rgba(4,6,12,.55)}
+.paper{position:relative;width:min(100%,480px);max-height:calc(100% - 20px);overflow:auto;padding:22px 22px 20px 40px;color:var(--ink);background:repeating-linear-gradient(transparent 0 29px,#dde6f3 29px 30px),var(--paper);border:3px solid var(--ink);border-radius:18px;box-shadow:0 7px 0 var(--ink);transform:translateY(14px) rotate(-.6deg);transition:transform .4s cubic-bezier(.3,1.5,.5,1)}
+.ovl.show .paper{transform:none}
+.paper::before{content:"";position:absolute;top:0;bottom:0;left:20px;width:2px;background:#ff9b9b}
+.paper h2{font-family:var(--hand);font-weight:400;font-size:clamp(26px,6vw,33px);line-height:1.05;margin-bottom:8px}
+.paper p{font-size:18px;line-height:1.25;margin-bottom:10px}
+.mini{font-family:var(--round);font-size:13px;color:#5c5a52}
+
+/* login monitor */
+.mon-wrap{position:absolute;left:50%;bottom:calc(28% - 4px);transform:translateX(-50%);width:min(94vw,600px,calc((70vh - 100px) * 1.42));display:flex;flex-direction:column;align-items:center;z-index:2}
+.monitor{width:100%;background:#2b2f3a;border:4px solid var(--ink);border-radius:16px;padding:10px 10px 20px;box-shadow:0 10px 0 rgba(20,21,27,.12);position:relative}
+.monitor::after{content:"";position:absolute;left:50%;bottom:6px;width:8px;height:8px;border-radius:50%;background:#7fe08c;transform:translateX(-50%);box-shadow:0 0 6px #7fe08c}
+.stand{width:20%;height:clamp(14px,3vh,30px);background:#2b2f3a;border:4px solid var(--ink);border-top:none;margin-top:-2px}
+.stand-base{width:42%;height:12px;background:#2b2f3a;border:4px solid var(--ink);border-radius:10px 10px 4px 4px;margin-top:-3px}
+.screen{position:relative;aspect-ratio:3/2;border:3px solid var(--ink);border-radius:8px;overflow:hidden;background:#090b10;container-type:inline-size}
+.scr-bg{position:absolute;inset:0;background-image:radial-gradient(1.2px 1.2px at 18px 22px,#fff 50%,transparent 52%),radial-gradient(1px 1px at 90px 70px,#fff 50%,transparent 52%),radial-gradient(1.4px 1.4px at 150px 30px,#cfe0ff 50%,transparent 52%),linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:210px 150px,210px 150px,210px 150px,34px 34px,34px 34px}
+.scr{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.4cqw;padding:10px 14px;text-align:center;color:#fff}
+.kicker{font-family:var(--round);font-weight:500;font-size:clamp(9px,3cqw,14px);color:#b8c6e6;border:1.5px solid #3d4a6b;border-radius:99px;padding:2px 10px;background:rgba(20,26,45,.7)}
+.scr h1{font-family:var(--hand);font-weight:400;font-size:clamp(24px,10cqw,56px);line-height:.95;text-shadow:0 3px 0 var(--ink)}
+.scr .sub{font-size:clamp(12px,4cqw,19px);color:#d3dcf0;line-height:1.12;max-width:92%}
+.login{display:flex;gap:8px;width:min(100%,370px)}
+.login input{flex:1;min-width:0;font-family:var(--hand);font-size:18px;padding:8px 12px;border:2.5px solid var(--ink);border-radius:10px;background:var(--paper);color:var(--ink);user-select:text;-webkit-user-select:text}
+.login input::placeholder{color:#9b9585}
+.login input.err{animation:shakeX .4s;border-color:var(--red)}
+.login .btn{padding:8px 14px;white-space:nowrap}
+.field-hint{display:none;font-family:var(--round);font-size:12px;color:#ffb3b3}
+.taskbar{position:absolute;left:0;right:0;bottom:0;height:20px;background:#1d2232;border-top:2px solid var(--ink);display:flex;align-items:center;gap:6px;padding:0 8px;font-family:var(--round);font-size:10px;color:#aab4c8}
+.taskbar .ic{width:11px;height:11px;border-radius:3px;background:var(--blue);border:1.5px solid var(--ink)}.taskbar .ic.o{background:var(--orange)}.taskbar .tm{margin-left:auto}
+.scr-glare{position:absolute;inset:0;background:linear-gradient(130deg,rgba(255,255,255,.09),transparent 38%);pointer-events:none}
+.sticky{position:absolute;z-index:3;font-family:var(--hand);color:var(--ink);font-size:clamp(12px,2.6vw,16px);line-height:1;padding:7px 9px;border:2.5px solid var(--ink);border-radius:3px;box-shadow:0 3px 0 rgba(0,0,0,.25)}
+.sticky.s1{top:-14px;right:-10px;background:#ffe066;transform:rotate(6deg)}
+.sticky.s2{bottom:4px;left:-12px;background:#ff9fb8;transform:rotate(-7deg)}
+
+/* briefing */
+.ph{display:inline-flex;align-items:center;gap:6px;font-family:var(--round);font-weight:600;font-size:13px;background:var(--panel-dd);color:#dfe4f0;border:2px solid var(--ink);border-radius:99px;padding:3px 12px 3px 10px;margin-bottom:10px}
+.ph i{width:8px;height:8px;border-radius:50%;background:var(--red);animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:.35}}
+.boss{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.av{width:46px;height:46px;flex:none;border-radius:50%;border:3px solid var(--ink);display:grid;place-items:center;font-size:26px;background:#ffd9b8}
+.boss b{display:block;font-family:var(--round);font-weight:600;font-size:16px}
+.note{background:#e8f1ff;border:2.5px solid var(--ink);border-radius:12px;padding:9px 12px;font-size:17px;line-height:1.2;margin:4px 0 14px}
+
+/* game */
+.game{position:absolute;inset:0;z-index:10;display:none;flex-direction:column;background:linear-gradient(180deg,#e4eef4,#cfdde8)}
+#app.playing .game{display:flex}
+#app.playing .mon-wrap,#app.playing .desk,#app.playing .shelf,#app.playing .sign,#app.playing .glow{display:none}
+.overhead{position:relative;z-index:3;width:min(100%,720px);margin:0 auto;padding:calc(10px + env(safe-area-inset-top)) 14px 12px;background:linear-gradient(#5d6579,#484f61);border:3px solid var(--ink);border-top:none;border-radius:0 0 22px 22px;box-shadow:0 6px 0 var(--ink)}
+.hud{display:flex;align-items:center;gap:10px;min-height:44px;padding-right:52px}
+.chip{display:flex;align-items:center;gap:6px;max-width:100%;padding:4px 14px 4px 6px;background:var(--panel-dd);border:2.5px solid var(--ink);border-radius:99px;font-family:var(--round);font-weight:600;font-size:14px;color:#fff;overflow:hidden}
+.chip .em{width:28px;height:28px;flex:none;border-radius:50%;background:#fff;border:2px solid var(--ink);display:grid;place-items:center;font-size:15px}
+.chip span.t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.meter{background:#121722;border:3px solid var(--ink);border-radius:14px;padding:8px 10px 9px;position:relative;overflow:hidden}
+.meter::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:var(--c)}
+.meter .row{display:flex;justify-content:space-between;align-items:center;gap:6px;font-family:var(--round);font-weight:600;font-size:clamp(11px,3vw,14px);color:var(--c);line-height:1.1;margin-top:3px}
+.meter .row b{color:#fff}
+.hbar{display:flex;gap:3px;margin-top:6px;--hc:var(--good)}
+.hbar i{flex:1;height:11px;border-radius:3px;background:#252a35;border:2px solid var(--ink)}
+.hbar i.on{background:var(--hc)}
+.hbar.low i.on{animation:blink .6s steps(2) infinite}
+.content-area{flex:1;min-height:0;width:min(100%,560px);margin:0 auto;padding:16px 14px calc(26px + env(safe-area-inset-bottom));overflow-y:auto;display:flex;flex-direction:column}
+.scene-card{position:relative;background:var(--paper);border:3px solid var(--ink);border-radius:16px;box-shadow:0 5px 0 var(--ink);padding:14px 16px 16px;margin-bottom:16px}
+.scene-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.wave-badge{font-family:var(--round);font-weight:600;font-size:13px;background:var(--warn);border:2px solid var(--ink);border-radius:99px;padding:1px 10px}
+.scene-time{font-family:var(--round);font-weight:500;font-size:13px;color:#4a4840}
+.scene-title{font-family:var(--hand);font-size:clamp(23px,5.6vw,28px);line-height:1.05;margin:4px 0 6px}
+.scene-desc{font-size:18px;line-height:1.22;color:#3b3a35}
+.visual-stage{margin-top:12px;background:#e8f0f6;border:2.5px solid var(--ink);border-radius:12px;overflow:hidden;line-height:0}
+.visual-stage svg{width:100%;height:auto;display:block}
+.visual-stage g[class^=anim]{transform-box:fill-box;transform-origin:center}
+.anim-swing{transform-origin:top center}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+@keyframes walk-x{0%,100%{transform:translateX(-14px)}50%{transform:translateX(14px)}}
+@keyframes drop-coin{0%{transform:translateY(-20px);opacity:0}50%{opacity:1}100%{transform:translateY(20px);opacity:0}}
+@keyframes swing{0%,100%{transform:rotate(0)}50%{transform:rotate(14deg)}}
+@keyframes shakeX{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
+.anim-shake{animation:shake 1s infinite}.anim-float{animation:float 2.5s infinite ease-in-out}.anim-pulse{animation:pulse 1.5s infinite}.anim-walk{animation:walk-x 4s infinite ease-in-out}.anim-drop{animation:drop-coin 1.2s infinite}.anim-swing{animation:swing 2s infinite ease-in-out;transform-origin:top center}
+.choice-prompt{font-family:var(--hand);font-size:22px;color:#2b303c;margin:0 4px 8px}
+.choices-wrapper{display:flex;flex-direction:column;gap:12px;margin-top:auto}
+.btn-choice{display:flex;align-items:flex-start;gap:12px;text-align:left;padding:12px 14px;background:var(--paper);border:3px solid var(--ink);border-radius:14px;box-shadow:0 4px 0 var(--ink);transition:transform .08s,box-shadow .08s}
+.btn-choice:hover{background:#fff6d8}
+.btn-choice:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.choice-bullet{width:28px;height:28px;flex:none;border-radius:50%;border:2.5px solid var(--ink);background:var(--warn);display:grid;place-items:center;font-family:var(--round);font-weight:700;font-size:14px}
+.choice-text{font-size:18px;line-height:1.18}
+
+/* feedback paper */
+.modal-overlay{position:absolute;inset:0;z-index:50;display:grid;place-items:center;padding:18px;background:rgba(4,6,12,.55);opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.show{opacity:1;pointer-events:auto}
+.modal-dialogue-card{position:relative;width:min(100%,460px);max-height:100%;overflow:auto;background:var(--paper);border:3px solid var(--ink);border-radius:18px;box-shadow:0 7px 0 var(--ink);padding:18px 18px 16px;transform:translateY(14px);transition:transform .35s cubic-bezier(.3,1.5,.5,1)}
+.modal-overlay.show .modal-dialogue-card{transform:none}
+.feedback-meta{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.revealed-tag{display:inline-block;font-family:var(--round);font-weight:600;font-size:14px;padding:1px 10px;border-radius:99px;border:2px solid var(--ink)}
+.tag-blue{background:#9fd3ff}.tag-yellow{background:var(--warn)}.tag-red{background:#ff9a9a}
+.delta-badges{display:flex;gap:6px}
+.delta-badge{font-family:var(--round);font-weight:600;font-size:12.5px;padding:1px 8px;border:2px solid var(--ink);border-radius:99px}
+.delta-pos{background:var(--good)}.delta-zero{background:#e9edf5}.delta-neg{background:#ff9a9a}
+.dialogue-bubble{background:#e8f1ff;border:2.5px solid var(--ink);border-radius:12px;padding:10px 12px;font-size:19px;line-height:1.2;margin-bottom:10px}
+.feedback-rationale{font-size:17px;line-height:1.22;color:#3b3a35;margin-bottom:14px}
+.btn-continue{width:100%;font-family:var(--round);font-weight:600;font-size:17px;padding:12px;border:2.5px solid var(--ink);border-radius:12px;background:var(--orange);box-shadow:0 4px 0 var(--ink)}
+.btn-continue:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+
+/* debrief */
+.summary-card,.theory-section{background:var(--paper);border:3px solid var(--ink);border-radius:16px;box-shadow:0 5px 0 var(--ink);padding:16px;margin-bottom:18px;text-align:center}
+.summary-card h2{font-family:var(--hand);font-weight:400;font-size:clamp(26px,6.4vw,32px);line-height:1.05;margin-bottom:8px}
+.dom-desc{font-size:17px;line-height:1.22;margin:10px 0 4px;color:#3b3a35}
+.recap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.recap-box{border:3px solid var(--ink);border-radius:14px;padding:8px 4px;box-shadow:0 3px 0 var(--ink)}
+.recap-box .count{font-family:var(--round);font-weight:700;font-size:34px;line-height:1}
+.recap-box .label{font-family:var(--round);font-weight:600;font-size:12.5px;margin-top:2px}
+.score-row{display:flex;justify-content:space-around;flex-wrap:wrap;gap:6px;font-family:var(--round);font-weight:500;font-size:14px}
+.score-row b{font-weight:700}
+.theory-section{text-align:left}
+.theory-title{font-family:var(--hand);font-weight:400;font-size:25px;margin-bottom:8px}
+.theory-item{border-left:6px solid #cbd5e1;padding:4px 0 4px 10px;margin-bottom:10px}
+.theory-item strong{display:block;font-family:var(--round);font-weight:600;font-size:15px}
+.theory-item p{font-size:16.5px;line-height:1.2;color:#3b3a35}
+.btn-restart{width:100%;font-family:var(--round);font-weight:600;font-size:18px;padding:12px;border:2.5px solid var(--ink);border-radius:12px;background:var(--orange);box-shadow:0 4px 0 var(--ink);margin-bottom:10px}
+.btn-restart:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+@media (max-height:560px){.shelf,.sign{display:none}.mon-wrap{bottom:calc(16% - 4px);width:min(66vw,calc((86vh - 46px) * 1.42))}.desk{height:16%}.paper{padding-top:14px}}
+@media (prefers-reduced-motion:reduce){.anim-shake,.anim-float,.anim-pulse,.anim-walk,.anim-drop,.anim-swing,.hbar.low i.on{animation:none!important}}
+
+</style>
+</head>
+<body>
+<div id="app" class="">
+  <div id="storeBg"></div><div class="glow"></div>
+  <div class="deco"><div class="shelf" aria-hidden="true"><span>🥫</span><span>🧴</span><span>🍞</span><span>🥛</span></div><div class="sign">Toko IDM Jaya</div></div>
+  <div class="desk"></div><i class="scan"></i><i class="cup"></i>
+
+  <!-- Presensi (layar monitor) -->
+  <div class="ovl show" id="clockInScreen" style="padding:0">
+    <div class="mon-wrap">
+      <div class="monitor">
+        <div class="screen">
+          <div class="scr-bg"></div>
+          <div class="scr">
+            <span class="kicker">🕒 <span id="currentDateDisplay">Hari, tanggal</span></span>
+            <h1>Apa Sebenarnya Employee Engagement?</h1>
+            <p class="sub">Gamifikasi ini akan menguji kembali tingkat pemahaman Bapak/Ibu tentang Employee Engagement.</p>
+            <div class="login">
+              <input type="text" id="cashierNameInput" placeholder="Ketik nama di sini..." maxlength="50" autocomplete="off" aria-label="Nama Bapak/Ibu" onkeydown="if(event.key==='Enter')submitClockIn()">
+              <button class="btn" onclick="submitClockIn()">Mulai<br>Gamifikasi</button>
+            </div>
+            <div id="nameInputError" class="field-hint">Mohon isi nama Bapak/Ibu terlebih dahulu</div>
+          </div>
+          <div class="taskbar"><span class="ic"></span><span class="ic o"></span><span>Kontribusi CINTA: Kontribusi tambahan sukarela</span><span class="tm">07:00</span></div>
+          <div class="scr-glare"></div>
+        </div>
+        <div class="sticky s1">TLFE</div>
+      </div>
+      <div class="stand"></div><div class="stand-base"></div>
+    </div>
+  </div>
+
+  <!-- Briefing (kertas catatan) -->
+  <div class="ovl dim" id="briefingScreen">
+    <div class="paper">
+      <span class="ph"><i></i>Briefing awal shift</span>
+      <div class="boss"><div class="av">🙋🏻‍♂️</div><div><b>Bapak Ferdi</b><span class="mini">Chief of Store Toko IDM Jaya</span></div></div>
+      <h2>Selamat bekerja, Bapak/Ibu <span id="briefingCashierName">Kasir</span>!</h2>
+      <p>Pada gamifikasi ini, Bapak/Ibu akan berperan sebagai kasir yang targetnya bukan hanya sales, tapi juga <b>Kepuasan Pelanggan</b> dan <b>Kekompakan Tim</b>.</p>
+      <div class="note">⚡ Setiap respons yang Bapak/Ibu ambil menentukan pelanggan pulang dengan puas atau kecewa, serta memengaruhi moral tim kerja.</div>
+      <button class="btn big" onclick="startSimulatedShift()">Mulai Gamifikasi</button>
+    </div>
+  </div>
+
+  <!-- Game -->
+  <div class="game">
+    <header class="overhead">
+      <div class="hud"><div class="chip"><span class="em">🏪</span><span class="t">Toko IDM Jaya · <span id="activeCashierBadge">Kasir: -</span></span></div></div>
+      <div class="meters">
+        <div class="meter" style="--c:#ff9a6a"><div class="row"><span>❤️ Kepuasan Pelanggan</span><b id="csatScore">20%</b></div><div class="hbar" id="csatBar"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="meter" style="--c:#5cc2ff"><div class="row"><span>🤝 Moral Tim Kerja</span><b id="moraleScore">20%</b></div><div class="hbar" id="moraleBar"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      </div>
+    </header>
+    <div class="content-area" id="gameArea"></div>
+    <div class="modal-overlay" id="feedbackModal">
+      <div class="modal-dialogue-card">
+        <div class="feedback-meta"><span class="revealed-tag" id="revealedTag">Tipe Sikap</span><div class="delta-badges" id="deltaBadges"></div></div>
+        <div class="dialogue-bubble" id="dialogueText"></div>
+        <div class="feedback-rationale" id="rationaleText"></div>
+        <button class="btn-continue" onclick="nextWave()">Lanjut skenario berikutnya</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="vig"></div>
+  <button id="audioToggleBtn" onclick="toggleAudio()" aria-label="Musik latar"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12" fill="none" stroke="#14151b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.6" fill="#14151b"/><circle cx="16.5" cy="16" r="2.6" fill="#14151b"/></svg></button>
+  <div id="copy">© Education and Training Departement 2026</div>
+</div>
+
+<script>
+  let audioContext = null;
+  let audioEnabled = true;
+  let bgmTimeout = null;
+  let noteIdx = 0;
+  let cashierName = "Kasir";
+  const ICON_ON='<svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12" fill="none" stroke="#14151b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.6" fill="#14151b"/><circle cx="16.5" cy="16" r="2.6" fill="#14151b"/></svg>';
+  const ICON_OFF=ICON_ON.replace('</svg>','<line x1="3" y1="3" x2="21" y2="21" stroke="#e54848" stroke-width="2.6" stroke-linecap="round"/></svg>');
+  const CAT={blue:['Engaged','b'],yellow:['Satisfied','y'],red:['Disengaged','r']};
+
+  const melody = [
+     261.63, 329.63, 392.00, 523.25,
+     349.23, 440.00, 523.25, 698.46,
+     392.00, 493.88, 587.33, 783.99,
+     523.25, 392.00, 329.63, 261.63
+  ];
+
+  function initAudio() {
+    if (!audioContext) {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+  }
+
+  function playBGM() {
+    if (!audioEnabled || !audioContext) return;
+    try {
+      const now = audioContext.currentTime;
+      const freq = melody[noteIdx];
+      
+      const osc = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      
+      osc.type = 'square'; 
+      osc.frequency.value = freq;
+      
+      gain.gain.setValueAtTime(0, now);
+      gain.gain.linearRampToValueAtTime(0.025, now + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+      
+      osc.connect(gain);
+      gain.connect(audioContext.destination);
+      osc.start(now);
+      osc.stop(now + 0.15);
+
+      noteIdx = (noteIdx + 1) % melody.length;
+      bgmTimeout = setTimeout(playBGM, 150); 
+    } catch (e) {
+      console.warn("Audio BGM Gagal", e);
+    }
+  }
+
+  function stopBGM() {
+    if (bgmTimeout) {
+      clearTimeout(bgmTimeout);
+      bgmTimeout = null;
+    }
+  }
+
+  function playEffect(type) {
+    if (!audioEnabled || !audioContext) return;
+    try {
+      const osc = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      osc.connect(gain);
+      gain.connect(audioContext.destination);
+
+      const now = audioContext.currentTime;
+      if (type === 'blue') {
+        osc.frequency.setValueAtTime(523.25, now);
+        osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.15);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.2);
+        osc.start(now);
+        osc.stop(now + 0.2);
+      } else if (type === 'yellow') {
+        osc.frequency.setValueAtTime(440, now);
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.12);
+        osc.start(now);
+        osc.stop(now + 0.12);
+      } else if (type === 'red') {
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.exponentialRampToValueAtTime(146.83, now + 0.25);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
+        osc.start(now);
+        osc.stop(now + 0.25);
+      }
+    } catch (e) {
+      console.warn("Audio Effect Gagal", e);
+    }
+  }
+
+  function toggleAudio() {
+    audioEnabled = !audioEnabled;
+    const btn = document.getElementById('audioToggleBtn');
+    if (audioEnabled) {
+      btn.innerHTML = ICON_ON;
+      initAudio();
+      playBGM();
+    } else {
+      btn.innerHTML = ICON_OFF;
+      stopBGM();
+    }
+  }
+
+  function updateLiveTimestamp() {
+    const now = new Date();
+    const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+    const dayName = days[now.getDay()];
+    const date = now.getDate();
+    const month = months[now.getMonth()];
+    const year = now.getFullYear();
+
+    const formatted = `${dayName}, ${date} ${month} ${year}`;
+    const elem = document.getElementById('currentDateDisplay');
+    if (elem) elem.innerText = formatted;
+  }
+
+  function submitClockIn() {
+    const input = document.getElementById('cashierNameInput');
+    const val = input.value.trim();
+    const errorEl = document.getElementById('nameInputError');
+
+    if (!val) {
+      errorEl.style.display = 'block';
+      input.classList.remove('err'); void input.offsetWidth; input.classList.add('err');
+      input.focus();
+      return;
+    }
+
+    errorEl.style.display = 'none';
+    cashierName = val;
+    document.getElementById('briefingCashierName').innerText = cashierName;
+    document.getElementById('activeCashierBadge').innerText = `Kasir: ${cashierName}`;
+
+    // Transisi dari layar Absensi ke Briefing Manager
+    document.getElementById('clockInScreen').classList.remove('show');
+    document.getElementById('briefingScreen').classList.add('show');
+  }
+
+  function startSimulatedShift() {
+    document.getElementById('briefingScreen').classList.remove('show');
+    document.getElementById('app').classList.add('playing');
+    initAudio();
+    playBGM();
+    renderScene();
+  }
+
+  function notifyLMS() {
+    try {
+      if(window.parent) window.parent.postMessage("scoreBarFound", "*");
+      if(window.top) window.top.postMessage("scoreBarFound", "*");
+    } catch (e) {
+      console.warn("LMS postMessage failed.", e);
+    }
+  }
+
+    /* ===== Ilustrasi skenario (SVG) ===== */
+  const INK='#14151b';
+  const R=(x,y,w,h,f,r=3)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${f}"/>`;
+  const C=(x,y,r,f)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${f}"/>`;
+  const L=(d,f='none',w,s)=>`<path d="${d}" fill="${f}"${w?` stroke-width="${w}"`:''}${s?` stroke="${s}"`:''}/>`;
+  const T=(x,y,t,s=11,f=INK)=>`<text x="${x}" y="${y}" font-size="${s}" fill="${f}" stroke="none" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="600">${t}</text>`;
+  const E=(x,y)=>`<circle cx="${x}" cy="${y}" r="1.7" fill="${INK}" stroke="none"/>`;
+  const G=(c,b,d)=>`<g class="${c}"${d?` style="animation-delay:${d}s"`:''}>${b}</g>`;
+  const STAR=(x,y)=>L(`M${x} ${y-8}L${x+2} ${y-2}L${x+8} ${y}L${x+2} ${y+2}L${x} ${y+8}L${x-2} ${y+2}L${x-8} ${y}L${x-2} ${y-2}Z`,'#ffe27a',1.8);
+  const FACE={
+    happy:E(-4,-47)+E(4,-47)+L('M-4 -42Q0 -38 4 -42','none',2),
+    sad:E(-4,-47)+E(4,-47)+L('M-4 -39Q0 -43 4 -39','none',2)+'<circle cx="-6" cy="-42" r="1.8" fill="#6fbdf0" stroke="none"/>',
+    angry:L('M-7 -53L-2 -50M7 -53L2 -50','none',2)+E(-4,-47)+E(4,-47)+L('M-4 -39Q0 -42 4 -39','none',2),
+    worry:E(-4,-47)+E(4,-47)+L('M-4 -40Q-2 -42 0 -40Q2 -38 4 -40','none',2)+'<path d="M10 -54q-3 4 0 5q3 -1 0 -5" fill="#6fbdf0" stroke="none"/>',
+    neutral:E(-4,-47)+E(4,-47)+L('M-3 -40H3','none',2),
+    shock:E(-4,-47)+E(4,-47)+'<circle cx="0" cy="-39" r="2.4" fill="#7a2d2d"/>'
+  };
+  const P=(x,y,o={})=>{const{s='#3d7fd9',h='#2b1d14',k='#f1c9a0',m='happy',sc=1,f=1}=o;
+    return `<g transform="translate(${x} ${y}) scale(${f*sc} ${sc})">${R(-8,-14,6,14,'#3a4050',2)}${R(2,-14,6,14,'#3a4050',2)}${R(-11,-36,22,24,s,7)}${C(0,-46,11,k)}${L('M-11 -47Q-10 -60 0 -58Q11 -60 11 -47Q5 -53 -2 -52Q-8 -52 -11 -47Z',h,2)}${FACE[m]}</g>`};
+  const B=(x,y,t,w=26)=>R(x-w/2,y-11,w,20,'#fff',9)+T(x,y+4,t,13);
+  const CT=(x,w)=>R(x,72,w,30,'#c99c6c',3)+R(x,72,w,7,'#e0b98a',3);
+  const SH=(x,w,full)=>{let b=R(x,16,w,86,'#d9dee6',4),cols=['#ff9a6a','#5cc2ff','#7fe08c','#ffd34d','#ff9fb8'];
+    for(let r=0;r<3;r++){const y=44+r*28;b+=L(`M${x} ${y}H${x+w}`,'none',3);
+      if(full)for(let i=0,cx=x+5;cx<x+w-14;i++,cx+=15)b+=R(cx,y-17+(i%2)*3,12,14-(i%2)*3,cols[(i+r)%5],2)}return b};
+  const S=b=>`<div class="visual-stage"><svg viewBox="0 0 300 130" aria-hidden="true"><g stroke="${INK}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">${R(0,0,300,102,'#e8f0f6',0)}${L('M0 102H300V130H0Z','#cfd9e2')}${b}</g></svg></div>`;
+  const V=[
+    S(R(8,28,46,74,'#bfe3f7',3)+L('M31 28V102','none',2)+[[88,112],[112,119],[140,109],[168,117]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="9" ry="4" fill="#8b6a4f" stroke="none"/>`).join('')+P(120,100,{m:'happy'})+G('anim-swing',L('M226 36L208 98')+R(190,96,36,10,'#f5e08a',4))+R(246,88,30,30,'#3d7fd9',5)+G('anim-float',STAR(178,34))),
+    S(L('M40 62H64M32 76H58','none',3)+G('anim-shake',P(100,100,{s:'#f2792b',m:'worry'})+R(116,68,24,12,'#e0a24f',6))+G('anim-pulse',C(215,36,17,'#fff')+L('M215 36V25M215 36L223 40','none',3))+R(236,50,34,22,'#2b303c')+CT(200,92)),
+    S(SH(14,132,false)+R(34,2,92,16,'#ff5a5a',6)+T(80,14,'PROMO',11,'#fff')+T(80,36,'Minyak Goreng',8)+T(80,64,'kosong',9)+P(216,100,{s:'#a06be0',m:'sad'})+G('anim-float',B(252,34,'?'))),
+    S(G('anim-drop',C(92,22,6,'#ffd34d'))+G('anim-drop',C(110,14,6,'#ffd34d'),.4)+P(40,100,{s:'#a06be0',m:'angry'})+P(96,100,{s:'#5fd68c',m:'neutral'})+R(116,70,20,18,'#f2c14e',5)+P(256,86,{m:'happy'})+CT(166,134)+R(206,48,36,24,'#2b303c')+R(211,52,26,11,'#7fe08c')),
+    S(SH(8,74,true)+G('anim-swing',R(26,74,46,17,'#fff')+T(49,87,'Rp 79.000',8.5))+R(196,30,76,48,'#2b303c',4)+R(202,36,64,34,'#121722',2)+T(234,58,'Rp 89.000',11,'#ff9a6a')+R(226,78,16,10,'#2b303c',2)+P(138,100,{s:'#ff9a6a',m:'angry'})+G('anim-shake',B(138,30,'!?',34))),
+    S(CT(14,170)+R(40,46,66,28,'#2b303c')+R(46,62,54,9,'#7fe08c')+R(50,58,46,8,'#a8efb3')+G('anim-pulse',C(142,44,16,'rgba(255,255,255,.75)')+L('M153 56L168 72','none',6))+R(196,32,42,56,'#fffdf7',3)+T(217,52,'-Rp 5.000',9,'#e54848')+L('M204 62H230M204 70H226M204 78H230','none',1.8)+P(270,100,{s:'#f2792b',m:'neutral'})),
+    S(L('M110 0V14','none',2)+R(80,14,60,20,'#5fd68c',6)+T(110,28,'OBAT',12)+SH(190,100,true)+G('anim-walk',P(100,100,{s:'#8aa0b8',h:'#e8e8e8',m:'worry'})+L('M120 100L127 62Q129 55 136 58','none',3.5))+G('anim-float',B(56,52,'?'))),
+    S(P(54,100,{s:'#5cc2ff',m:'shock'})+G('anim-shake',P(112,100,{s:'#ffd34d',m:'sad',sc:.6}))+'<ellipse cx="158" cy="108" rx="20" ry="6" fill="#f7c6d9" stroke="none"/>'+G('anim-drop',L('M152 66L158 90L164 66Z','#e0a24f')+C(158,62,8,'#f7c6d9'))+L('M218 110L234 76L250 110Z','#ffd34d')+T(234,104,'!',15)),
+    S(R(18,64,64,38,'#f2792b',5)+R(26,48,18,18,'#ffd34d',2)+R(48,44,14,22,'#5cc2ff',2)+R(66,54,12,12,'#5fd68c',2)+R(112,34,74,72,'#3f4555',8)+R(122,42,54,28,'#121722',3)+G('anim-shake',L('M141 48L157 64M157 48L141 64','none',4,'#ff5a5a'))+[0,1,2].map(i=>R(124+i*18,78,14,8,'#aab4c8',2)).join('')+G('anim-pulse',L('M130 18Q150 4 170 18M138 26Q150 16 162 26','none',3)+C(150,32,2.5,INK)+L('M128 6L172 38','none',3.5,'#ff5a5a'))+P(240,100,{s:'#a06be0',m:'worry'})+R(206,64,22,13,'#fffdf7',2)),
+    S(P(34,88,{m:'happy'})+CT(8,138)+G('anim-float',R(62,52,32,22,'#8b5a2b',4)+R(62,58,32,6,'#c58a4b',0)+B(78,30,'!',22))+R(206,18,56,84,'#bfe3f7',3)+L('M206 18L228 26V94L206 102','#9fd0ea')+L('M110 92H186','none',3,'#f2792b').replace('/>',' stroke-dasharray="7 6"/>')+G('anim-walk',P(236,100,{s:'#f2792b',m:'neutral',f:-1}))+G('anim-float',STAR(190,34)))
+  ];
+  /* ===== Latar toko: sudut pandang dari balik meja kasir ===== */
+  (function(){
+    const cols=['#ff9a6a','#5cc2ff','#7fe08c','#ffd34d','#ff9fb8','#a06be0'];
+    const unit=x=>{let b=R(x,52,130,138,'#dfe3ea',5);for(let r=0;r<4;r++){const y=88+r*34;b+=L(`M${x} ${y}H${x+130}`,'none',3);for(let i=0,cx=x+6;cx<x+118;i++,cx+=17)b+=R(cx,y-24+(i*7+r*3)%6,13,22-(i*7+r*3)%6,cols[(i+r*2)%6],2)}return b};
+    let f='';for(let i=-4;i<=8;i++)f+=L(`M200 190L${i*60-20} 300`,'none',1.5,'rgba(20,21,27,.18)');
+    [206,224,250,285].forEach(y=>f+=L(`M0 ${y}H400`,'none',1.5,'rgba(20,21,27,.18)'));
+    document.getElementById('storeBg').innerHTML=`<svg id="storeSvg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMin meet"><g stroke="${INK}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">${R(0,0,400,192,'#f3ead8',0)}${R(0,0,400,34,'#e4dcc8',0)}${[60,170,280].map(x=>R(x,10,60,12,'#fffbe8',6)).join('')}${L('M0 190H400V300H0Z','#cfd6dc')}${f}${unit(8)}${unit(262)}${R(146,64,108,128,'#bfe3f7',4)}${L('M200 64V192M146 128H254','none',3)}<circle cx="224" cy="96" r="9" fill="#ffd34d" stroke="${INK}"/><path d="M152 192V160H170V176H190V150H200V192ZM206 192V168H226V154H246V192Z" fill="#9fb2c6"/>${R(176,100,48,20,'#ff5a5a',8)}${T(200,115,'BUKA',13,'#fff')}${L('M150 34V50M250 34V50','none',2)}${R(112,44,76,18,'#5fd68c',6)}${T(150,57,'MINUMAN',10)}${R(212,44,76,18,'#ffd34d',6)}${T(250,57,'SNACK',10)}</g></svg>`;
+    const fit=()=>document.getElementById('storeSvg').setAttribute('preserveAspectRatio',innerWidth/innerHeight>1.1?'xMidYMid slice':'xMidYMin meet');
+    fit();addEventListener('resize',fit);
+  })();
+
+  const rawScenarios = [
+    {
+      time: "07:00 WIB",
+      title: "Buka Toko & Terdapat Noda <br> di Lantai Depan Kasir",
+      desc: "Shift pagi baru dimulai. Bapak/Ibu melihat jejak sepatu kotor dan cipratan lumpur di lantai depan meja kasir dari shift malam kemarin.",
+      visual: V[0],
+      options: [
+        {
+          type: "red", tag: "🔴 Disengaged",
+          text: "Membiarkannya, karena pada jadwal, ada tim kerja lainnya yang bertugas untuk membersihkan area tersebut pada jam 09:00 pagi.",
+          csat: -10, morale: -10,
+          dialogue: "Pelanggan: 'Aduh, lantainya becek dan kotor ya... bikin sepatu saya jadi kotor deh.'",
+          rationale: "Respon tidak peka terhadap kondisi toko yang kotor memberikan kesan toko yang tidak terawat di mata pelanggan."
+        },
+        {
+          type: "yellow", tag: "🟡 Satisfied",
+          text: "Menandai area dengan papan penanda 'Lantai Licin' dan memberi tahu tim kerja lainnya yang bertugas untuk membersihkan area tersebut.",
+          csat: 5, morale: 5,
+          dialogue: "Bagus karena sudah berusaha untuk memberitahu pelanggan jika lantai licin, tetapi kenapa harus menunggu dan tidak langsung membersihkannya'",
+          rationale: "Kondisi yang tidak sesuai tidak dibiarkan begitu saja, namun pelanggan tetap melihat noda kotor di depan kasir."
+        },
+        {
+          type: "blue", tag: "🔵 Engaged",
+          text: "Inisiatif mengambil alat pel dan membersihkan noda sebelum pelanggan lewat.",
+          csat: 10, morale: 10,
+          dialogue: "Pelanggan: 'Wah, tokonya bersih dan wangi sekali pagi-pagi, jadi suka belanja di sini.'",
+          rationale: "Inisiatif ekstra Bapak/Ibu memastikan standar kebersihan toko terjaga dengan baik tanpa saling lempar tanggung jawab."
+        }
+      ]
+    },
+    {
+      time: "08:30 WIB",
+      title: "Pelanggan yang Tergesa-Gesa",
+      desc: "Jam padat berangkat kerja. Seorang pelanggan meletakkan roti dengan tangan gemetar sembari terus melirik jam tangannya.",
+      visual: V[1],
+      options: [
+        {
+          type: "red", tag: "🔴 Disengaged",
+          text: "Melakukan scan barang dengan santai sambil merapikan struk yang menumpuk tanpa menghiraukan kepanikan pelanggan.",
+          csat: -10, morale: -10,
+          dialogue: "Pelanggan: 'Duh, bisa lebih cepat nggak ya?! Saya jadi telat ke kantornya nih!'",
+          rationale: "Ketidakpedulian emosional menciptakan ketegangan dan membuat pelanggan merasa tidak dihargai."
+        },
+        {
+          type: "yellow", tag: "🟡 Satisfied",
+          text: "Melakukan scan barang dengan tenang dan teliti, kemudian menanyakan metode pembayaran sesuai urutan SOP dan menutup dengan salam.",
+          csat: 5, morale: 5,
+          dialogue: "Pelanggan: 'Terima kasih, struknya nggak usah...' (langsung lari terburu-buru keluar pintu).",
+          rationale: "Prosedur operasional kasir terlaksana, namun kurang tanggap membaca situasi darurat pelanggan."
+        },
+        {
+          type: "blue", tag: "🔵 Engaged",
+          text: "Melakukan scan barang dengan cepat. Karena sudah melihat pelanggan memegang uang tunai, langsung menyiapkan uang kembaliannya.",
+          csat: 10, morale: 10,
+          dialogue: "Pelanggan: 'Wah, terima kasih banyak ya pengertiannya! Saya jadi nggak telat ke kantornya deh!'",
+          rationale: "Empati situasional dan kecepatan pelayanan menciptakan sentuhan kepedulian di saat genting."
+        }
+      ]
+    },
+    {
+      time: "10:00 WIB",
+      title: "Stok Promo Kosong",
+      desc: "Promo sangat ramai. Display minyak goreng promo di lorong utama habis. Seorang Ibu mendatangi Bapak/Ibu dengan wajah kecewa.",
+      visual: V[2],
+      options: [
+        {
+          type: "red", tag: "🔴 Disengaged",
+          text: "Mengangkat bahu dan menjawab singkat: 'Kalau di rak habis ya sudah ludes Bu, belum datang lagi barangnya.'",
+          csat: -10, morale: -10,
+          dialogue: "Ibu Pelanggan: 'Masa baru jam 10 sudah habis?! Bikin promosi kok nggak niat!'",
+          rationale: "Sikap defensif dan acuh merusak integritas promosi toko dan memicu komplain negatif dari pelanggan."
+        },
+        {
+          type: "yellow", tag: "🟡 Satisfied",
+          text: "Meminta maaf secara sopan bahwa display sedang kosong, dan menyarankan ibu tersebut untuk datang kembali di keesokan harinya.",
+          csat: 5, morale: 5,
+          dialogue: "Ibu Pembeli: 'Ya sudahlah... sayang sekali saya sudah jauh-jauh datang ke sini.'",
+          rationale: "Jawaban sopan dan sesuai kenyataan di lapangan, namun tidak memberikan solusi alternatif saat itu juga."
+        },
+        {
+          type: "blue", tag: "🔵 Engaged",
+          text: "Minta izin sejenak mengecek ketersediaan di gudang, dan sigap mengarahkan ke merek alternatif dengan kualitas setara yang juga sedang promosi jika stok benar-benar kosong.",
+          csat: 10, morale: 10,
+          dialogue: "Ibu Pembeli: 'Terima kasih ya sudah diperiksa ke gudang dan sudah memberikan rekomendasi alternatifnya!'",
+          rationale: "Upaya ekstra mencarikan jalan keluar menyelamatkan potensi penjualan dan mengobati kekecewaan konsumen."
+        }
+      ]
+    },
+    {
+      time: "12:30 WIB",
+      title: "Uang Koin Logam Menggunung",
+      desc: "Antrean panjang. Pelanggan di hadapan Bapak/Ibu mengeluarkan sekantong penuh koin logam receh untuk membayar belanjaan.",
+      visual: V[3],
+      options: [
+        {
+          type: "red", tag: "🔴 Disengaged",
+          text: "Menunjukkan mimik wajah agak kesal dan mulai menghitung koin satu demi satu dengan sangat lambat.",
+          csat: -10, morale: -10,
+          dialogue: "Pelanggan: 'Uang koin juga alat pembayaran yang sah kan?! Kalau diliatin gini, besok-besok saya nggak mau belanja di sini lagi deh.'",
+          rationale: "Mempermalukan pelanggan di depan antrean menciptakan trauma bagi pelanggan."
+        },
+        {
+          type: "yellow", tag: "🟡 Satisfied",
+          text: "Menerima koin dan menghitungnya secara tenang sesuai panduan verifikasi uang tunai hingga jumlahnya pas tanpa banyak bicara.",
+          csat: 5, morale: 5,
+          dialogue: "Pelanggan: 'Terima kasih sudah mau menghitung uang receh saya ya...' (agak segan pada antrean belakang).",
+          rationale: "Profesional dan taat aturan, namun suasana antrean di belakang menjadi agak tegang karena pelanggan lainnya menunggu cukup lama."
+        },
+        {
+          type: "blue", tag: "🔵 Engaged",
+          text: "Tersenyum ramah dan berkata 'Pas sekali kami butuh kembalian Bu', sambil memanggil rekan untuk membuka kasir sebelah.",
+          csat: 10, morale: 10,
+          dialogue: "Pelanggan: 'Lega sekali dilayani dengan sopan tanpa dihakimi, kasir sebelahnya juga langsung dibuka!'",
+          rationale: "Menunjukkan rasa hormat kepada pelanggan dan berkolaborasi untuk menjaga kepuasan pelanggan lainnya."
+        }
+      ]
+    },
+    {
+      time: "13:45 WIB",
+      title: "Selisih Harga di Rak dengan di Komputer",
+      desc: "Pelanggan komplain karena harga susu di rak tertulis Rp 79.000, tetapi saat di-scan di layar kasir tertera Rp 89.000.",
+      visual: V[4],
+      options: [
+        {
+          type: "red", tag: "🔴 Disengaged",
+          text: "Membantah pelanggan: 'Dari sistemnya begitu Bu. Kalau di komputer 89 ribu, ya berarti harganya segitu.'",
+          csat: -10, morale: -10,
+          dialogue: "Pelanggan: 'Ini namanya penipuan konsumen! Indomaret masa gitu?!'",
+          rationale: "Sikap arogan dalam menghadapi komplain memicu ketidakpuasan pelanggan."
+        },
+        {
+          type: "yellow", tag: "🟡 Satisfied",
+          text: "Menjelaskan aturan sistem bahwa tag harga mungkin belum diganti dan menawarkan opsi pembatalan item.",
+          csat: 5, morale: 5,
+          dialogue: "Pelanggan: 'Ya sudah saya cancel saja susunya, tolong dong lebih diperhatiin lagi tag harga di rak.'",
+          rationale: "Mengikuti batas regulasi sistem dengan tertib, namun membiarkan konsumen pulang dengan kecewa dan kehilangan potensi penjualan."
+        },
+        {
+          type: "blue", tag: "🔵 Engaged",
+          text: "Meminta maaf dengan tulus, menahan transaksi sejenak untuk berkoordinasi dengan pimpinan shift terkait harga barangnya.",
+          csat: 10, morale: 10,
+          dialogue: "Pelanggan: 'Terima kasih banyak atas tanggung jawab dan solusinya, pelayanan di sini jempolan!'",
+          rationale: "Melindungi kepercayaan pelanggan dengan mencoba untuk memverifikasi kembali harga barangnya."
+        }
+      ]
+    },
+    {
+      time: "15:00 WIB",
+      title: "Serah Terima Laci Kasir",
+      desc: "Saat laci kasir dihitung bersama rekan shift siang, terdapat selisih uang tunai minus Rp 5.000 dari laporan di sistem.",
+      visual: V[5],
+      options: [
+        {
+          type: "red", tag: "🔴 Disengaged",
+          text: "Langsung melempar uang Rp 5.000 dari kantong pribadi ke laci sambil menggerutu dan buru-buru absen pulang.",
+          csat: -10, morale: -10,
+          dialogue: "Rekan Kerja Shift Baru: 'Kalau ditambal asal-asalan begini, nanti pas audit kita berdua yang kena masalah.'",
+          rationale: "Menyelesaikan masalah secara sembrono merusak kepercayaan dan hubungan tim kerja."
+        },
+        {
+          type: "yellow", tag: "🟡 Satisfied",
+          text: "Mencatat selisih Rp 5.000 pada formulir berita acara serah terima laci kasir secara transparan sesuai SOP pembukuan harian toko.",
+          csat: 5, morale: 5,
+          dialogue: "Pimpinan Shift: 'Baik, selisih tercatat di sistem. Nanti kita jadikan catatan evaluasi berkala.'",
+          rationale: "Sangat taat asas kepatuhan administrasi dan menjaga kejujuran operasional."
+        },
+        {
+          type: "blue", tag: "🔵 Engaged",
+          text: "Meluangkan waktu bersama rekan kerja shift baru untuk meninjau kembali rincian transaksi hingga akar masalahnya ditemukan.",
+          csat: 10, morale: 10,
+          dialogue: "Rekan Shift Baru: 'Wah ternyata ada struk retur yang belum ke-input. Makasih banget udah mau bantu cek bareng.'",
+          rationale: "Usaha lebih untuk bertanggung jawab menyelesaikan masalah menumbuhkan tingkat kepercayaan dan hubungan di dalam tim kerja."
+        }
+      ]
+    },
+    {
+      time: "16:30 WIB",
+      title: "Kakek Mencari Minyak Angin",
+      desc: "Seorang kakek tampak bingung mondar-mandir di lorong. Beliau bertanya di mana letak minyak angin.",
+      visual: V[6],
+      options: [
+        {
+          type: "red", tag: "🔴 Disengaged",
+          text: "Menjawab tanpa memandang wajahnya sambil terus mengetik: 'Lorong obat di belakang sana kek.'",
+          csat: -10, morale: -10,
+          dialogue: "Kakek: 'Aduh di mana ya obatnya... mata kakek sudah agak kabur, jadi nggak keliatan kalau harus melihat tulisan kecil-kecil.'",
+          rationale: "Kurang empati pada konsumen seringkali membuat pelanggan merasa diabaikan."
+        },
+        {
+          type: "yellow", tag: "🟡 Satisfied",
+          text: "Memberikan panduan arah yang sangat detail dari balik konter: 'Di Lorong 3 sebelah kiri, rak nomor 2 dari bawah ya Kek.'",
+          csat: 5, morale: 5,
+          dialogue: "Kakek: 'Oh Lorong 3 ya... baik, kakek coba cari pelan-pelan ke sana.'",
+          rationale: "Instruksi yang diberikan sudah akurat dan santun, namun pelanggan lansia rentan masih perlu dibantu secara langsung."
+        },
+        {
+          type: "blue", tag: "🔵 Engaged",
+          text: "Meminta izin rekan keluar konter sejenak, mengantarkan kakek ke rak, dan membantunya memilih ukuran botol yang sesuai.",
+          csat: 10, morale: 10,
+          dialogue: "Kakek: 'Terima kasih banyak, baik sekali kamu mau menuntun kakek langsung.'",
+          rationale: "Pelayanan dari hati menghadirkan kehangatan nyata yang melebihi standar baku."
+        }
+      ]
+    },
+    {
+      time: "18:00 WIB",
+      title: "Es Krim Jatuh",
+      desc: "Balita menangis histeris karena es krimnya jatuh mengotori lantai lorong. Sang ibu panik dan merasa bersalah.",
+      visual: V[7],
+      options: [
+        {
+          type: "red", tag: "🔴 Disengaged",
+          text: "Menatap sinis dari kejauhan dan berbisik ke rekan kerja tentang orang tua yang tidak bisa mengawasi anaknya.",
+          csat: -10, morale: -10,
+          dialogue: "Ibu Pelanggan: 'Bukannya dibantuin, malah diliatin doang... padahal ini kan musibah.'",
+          rationale: "Sikap menghakimi menciptakan trauma emosional bagi pengunjung."
+        },
+        {
+          type: "yellow", tag: "🟡 Satisfied",
+          text: "Dengan sigap membantu membersihkan lantai lorong dari es krim yang jatuh.",
+          csat: 5, morale: 5,
+          dialogue: "Ibu Pelanggan: 'Maaf ya, lantainya jadi kotor karena es krim anak saya...'",
+          rationale: "Mengamankan area dari bahaya terpeleset."
+        },
+        {
+          type: "blue", tag: "🔵 Engaged",
+          text: "Menghampiri sambil tersenyum dan berkata 'Tidak apa-apa Ibu, jangan cemas', kemudian sigap bantu membersihkan lantai dan menghibur si anak.",
+          csat: 10, morale: 10,
+          dialogue: "Ibu Pelanggan: 'Ya ampun ramah sekali... tangisan anak saya juga langsung reda. Terima kasih banyak ya!'",
+          rationale: "Empati kemanusiaan mengubah situasi krisis menjadi momen loyalitas yang kuat."
+        }
+      ]
+    },
+    {
+      time: "19:30 WIB",
+      title: "Pelanggan Mengalami Kendala Sinyal saat Bayar Menggunakan QRIS",
+      desc: "Pelanggan memilih metode pembayaran QRIS, namun saat membuka aplikasi m-banking, sinyal hp pelanggan tersebut tiba-tiba hilang sehingga transaksi tertunda.",
+      visual: V[8],
+      options: [
+        {
+          type: "red", tag: "🔴 Disengaged",
+          text: "Berkata ketus: 'Kalau sinyalnya susah, dibatalin dulu aja ya, kasihan yang di belakang nunggunya jadi lama.'",
+          csat: -10, morale: -10,
+          dialogue: "Pelanggan: 'Masa langsung dibatalkan?! Capek-capek saya milih barang setengah jam di dalam!'",
+          rationale: "Menghilangkan potensi penjualan dan memicu kemarahan akibat tidak adanya inisiatif."
+        },
+        {
+          type: "yellow", tag: "🟡 Satisfied",
+          text: "Mempersilakan pelanggan untuk mencari sinyal dan menunggu dengan sabar hingga aplikasi m-banking pelanggan berhasil tersambung.",
+          csat: 5, morale: 5,
+          dialogue: "Pelanggan: 'Aduh, maaf ya jadi lama, susah banget soalnya sinyal di dalam toko ini.'",
+          rationale: "Sudah menunjukkan sikap sabar dan toleran sesuai standar pelayanan, namun membiarkan antrean jadi terhambat."
+        },
+        {
+          type: "blue", tag: "🔵 Engaged",
+          text: "Menyampaikan maaf atas kendala sinyal di area toko dan berinisiatif menawarkan koneksi internet dari hp pribadinya agar transaksi pelanggan segera berhasil",
+          csat: 10, morale: 10,
+          dialogue: "Pelanggan: 'Wah, terima kasih banyak udah mau kasih saya koneksi internet dari hp nya! Untung banget, kalau nggak bisa batal nih belanjaan saya.'",
+          rationale: "Kerelaan memberikan solusi di luar fasilitas standar demi kepuasan pelanggan adalah bentuk pengorbanan kecil yang berdampak besar."
+        }
+      ]
+    },
+    {
+      time: "21:45 WIB",
+      title: "Dompet Pelanggan Tertinggal Menjelang Tutup Toko",
+      desc: "Saat sedang mengelap meja kasir untuk persiapan tutup toko, Bapak/Ibu menemukan sebuah dompet tertinggal. Bapak/Ibu ingat betul itu milik seorang langganan yang baru saja berjalan keluar menuju area parkir.",
+      visual: V[9],
+      options: [
+        {
+          type: "red", tag: "🔴 Disengaged",
+          text: "Memasukkan dompet ke laci bawah kasir begitu saja. Biar besok saja diurus kalau ibunya sadar dan datang mencari ke toko.",
+          csat: -10, morale: -10,
+          dialogue: "Pelanggan (keesokan harinya): 'Aduh, semalam saya panik banget nyariin dompet... kok saya nggak dipanggil sih pas saya masih di depan pintu?'",
+          rationale: "Sikap pasif dan kurangnya kepedulian membuat pelanggan mengalami kepanikan semalaman yang sebenarnya bisa dicegah."
+        },
+        {
+          type: "yellow", tag: "🟡 Satisfied",
+          text: "Mengamankan dompet tersebut dan menyerahkannya kepada Pimpinan Shift beberapa menit kemudian untuk disimpan.",
+          csat: 5, morale: 5,
+          dialogue: "Pimpinan Shift: 'Oke, sudah saya catat di buku serah terima barang tertinggal. Besok kalau ibunya datang, arahkan ke saya ya.'",
+          rationale: "Bapak/Ibu telah menjalankan SOP pengamanan barang temuan dengan sangat tertib, meskipun pelanggan tetap akan pulang dalam keadaan gelisah."
+        },
+        {
+          type: "blue", tag: "🔵 Engaged",
+          text: "Meninggalkan meja kasir sebentar, bergegas berlari ke area parkir mengejar pelanggan tersebut untuk mengembalikan dompetnya secara langsung.",
+          csat: 10, morale: 10,
+          dialogue: "Pelanggan: 'Ya ampun! Saya sama sekali nggak sadar... Terima kasih banyak ya, saya sampe dikejar-kejar begini!'",
+          rationale: "Inisiatif berlari mengejar pelanggan ke parkiran memberikan kelegaan instan dan menciptakan rasa kepuasan pelanggan yang kuat."
+        }
+      ]
+    }
+  ];
+
+  let currentWave = 0;
+  let csat = 20;
+  let morale = 20;
+  let history = [];
+  let currentOptions = [];
+  let pendingChoice = null;
+
+  function shuffleArray(array) {
+    let shuff = [...array];
+    for (let i = shuff.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuff[i], shuff[j]] = [shuff[j], shuff[i]];
+    }
+    return shuff;
+  }
+
+  function updateDashboard() {
+    csat = Math.max(0, Math.min(100, csat));
+    morale = Math.max(0, Math.min(100, morale));
+
+    document.getElementById('csatScore').innerText = csat + '%';
+    document.getElementById('moraleScore').innerText = morale + '%';
+    
+    const csatBar = document.getElementById('csatBar');
+    const moraleBar = document.getElementById('moraleBar');
+    
+    [[csatBar,csat],[moraleBar,morale]].forEach(([bar,v])=>{
+      const on = Math.round(v/10);
+      bar.querySelectorAll('i').forEach((s,i)=>s.classList.toggle('on', i < on));
+      bar.style.setProperty('--hc', v >= 70 ? 'var(--good)' : (v >= 50 ? 'var(--warn)' : 'var(--red)'));
+      bar.classList.toggle('low', v < 30);
+    });
+  }
+
+  function renderScene() {
+    const area = document.getElementById('gameArea');
+    area.innerHTML = '';
+    area.scrollTop = 0;
+
+    if (currentWave >= rawScenarios.length) {
+      renderDebrief();
+      return;
+    }
+
+    const scene = rawScenarios[currentWave];
+    currentOptions = shuffleArray(scene.options);
+
+    const letterBullets = ['A', 'B', 'C'];
+
+    let optionsHtml = currentOptions.map((opt, idx) => `
+      <button class="btn-choice" onclick="selectChoice(${idx})">
+        <div class="choice-bullet">${letterBullets[idx]}</div>
+        <div class="choice-text">${opt.text}</div>
+      </button>
+    `).join('');
+
+    area.innerHTML = `
+      <div class="scene-card">
+        <div class="scene-head"><span class="wave-badge">Skenario ${currentWave + 1}/${rawScenarios.length}</span><span class="scene-time">🕒 ${scene.time}</span></div>
+        <div class="scene-title">${scene.title}</div>
+        <div class="scene-desc">${scene.desc}</div>
+        ${scene.visual}
+      </div>
+      <div class="choice-prompt">Apa yang akan kamu lakukan, Bapak/Ibu ${cashierName}?</div>
+      <div class="choices-wrapper">
+        ${optionsHtml}
+      </div>
+    `;
+
+    updateDashboard();
+  }
+
+  function selectChoice(index) {
+    pendingChoice = currentOptions[index];
+    playEffect(pendingChoice.type);
+    showFeedbackModal(pendingChoice);
+  }
+
+  function showFeedbackModal(choice) {
+    const modal = document.getElementById('feedbackModal');
+    const revealedTag = document.getElementById('revealedTag');
+    const deltaBadges = document.getElementById('deltaBadges');
+    
+    revealedTag.className = `revealed-tag tag-${choice.type}`;
+    revealedTag.innerText = choice.tag;
+
+    const formatDelta = (val, label) => {
+      const cls = val > 0 ? 'delta-pos' : (val === 0 ? 'delta-zero' : 'delta-neg');
+      const sign = val > 0 ? `+${val}` : `${val}`;
+      return `<span class="delta-badge ${cls}">${label} ${sign}%</span>`;
+    };
+
+    deltaBadges.innerHTML = `
+      ${formatDelta(choice.csat, 'Kepuasan')}
+      ${formatDelta(choice.morale, 'Moral')}
+    `;
+
+    document.getElementById('dialogueText').innerText = choice.dialogue;
+    document.getElementById('rationaleText').innerText = choice.rationale;
+    
+    modal.classList.add('show');
+  }
+
+  function nextWave() {
+    document.getElementById('feedbackModal').classList.remove('show');
+
+    if (pendingChoice) {
+      csat += pendingChoice.csat;
+      morale += pendingChoice.morale;
+
+      history.push({
+        wave: currentWave + 1,
+        type: pendingChoice.type,
+      });
+      pendingChoice = null;
+    }
+
+    currentWave++;
+    renderScene();
+  }
+
+  function renderDebrief() {
+    const area = document.getElementById('gameArea');
+    
+    const blue = history.filter(h => h.type === 'blue').length;
+    const yellow = history.filter(h => h.type === 'yellow').length;
+    const red = history.filter(h => h.type === 'red').length;
+
+    let dominantProfile = "DISENGAGED";
+    let dominantClass = "tag-red";
+    let dominantDesc = `Bapak/Ibu ${cashierName} cenderung bersikap pasif. Hal ini menyebabkan kepuasan pelanggan merosot drastis dan beban moral tim menjadi negatif karena sikap apatis terhadap masalah.`;
+
+    if (blue >= yellow && blue >= red) {
+      dominantProfile = "ENGAGED";
+      dominantClass = "tag-blue";
+      dominantDesc = `Luar biasa, Bapak/Ibu ${cashierName}! menunjukkan sifat kepemilikan terhadap pekerjaan yang baik. Melalui upaya ekstra (Discretionary Effort), hubungan dengan tim kerja dan kepuasan pelanggan meningkat.`;
+    } else if (yellow >= blue && yellow >= red) {
+      dominantProfile = "SATISFIED";
+      dominantClass = "tag-yellow";
+      dominantDesc = `Konsisten dan patuh aturan! Operasional shift berjalan aman di tangan Bapak/Ibu ${cashierName}. Namun, masih terbatas SOP baku. Ingat, pelanggan mengingat sentuhan empati ekstra.`;
+    }
+
+    area.innerHTML = `
+      <div class="summary-card">
+        <h2>Hasil shift, ${cashierName}</h2>
+        <div class="revealed-tag ${dominantClass}" >Profil dominan: ${dominantProfile}</div>
+        <p class="dom-desc">${dominantDesc}</p>
+
+        <div class="recap-grid">
+          <div class="recap-box" style="background: var(--blue-light);">
+            <div class="count">${blue}</div>
+            <div class="label">Engaged</div>
+          </div>
+          <div class="recap-box" style="background: var(--yellow-light);">
+            <div class="count">${yellow}</div>
+            <div class="label">Satisfied</div>
+          </div>
+          <div class="recap-box" style="background: var(--red-light);">
+            <div class="count">${red}</div>
+            <div class="label">Disengaged</div>
+          </div>
+        </div>
+
+        <div class="score-row">
+          <div>Kepuasan pelanggan: <b>${csat}%</b></div>
+          <div>Moral tim: <b>${morale}%</b></div>
+        </div>
+      </div>
+
+      <div class="theory-section">
+        <h3 class="theory-title">Employee Engagement itu bukan cuma hadir secara fisik saja, tetapi pikiran kita juga harus ikut bekerja dan peduli dengan hasil pekerjaan kita.” </h3>
+        <div class="theory-item" style="border-left-color: #8b5cf6;">
+          <strong>Meaningfulness</strong>
+          <p>Perasaan bahwa pekerjaan yang dilakukan itu bermakna dan memiliki dampak bagi orang lain serta perusahaan.</p>
+        </div>
+        <div class="theory-item" style="border-left-color: #10b981;">
+          <strong>Psychological Safety</strong>
+          <p>Iklim kerja saling peduli, seluruh anggota tim berani untuk mencari solusi bersama tanpa rasa takut disalahkan.</p>
+        </div>
+        <div class="theory-item" style="border-left-color: #f59e0b;">
+          <strong>Availability</strong>
+          <p>Kesiapan kognitif dan emosional anggota tim untuk sigap merespon kendala tak terduga, alih-alih pasrah pada situasi.</p>
+        </div>
+      </div>
+
+      <button class="btn-restart" onclick="restartGame()">
+        Ulang Gamifikasi
+      </button>
+    `;
+    updateDashboard();
+    notifyLMS();
+  }
+
+  function restartGame() {
+    currentWave = 0;
+    csat = 20;
+    morale = 20;
+    history = [];
+    document.getElementById('clockInScreen').classList.add('show');
+    document.getElementById('briefingScreen').classList.remove('show');
+    document.getElementById('app').classList.remove('playing');
+    document.getElementById('gameArea').innerHTML = '';
+    csat = 20; morale = 20; updateDashboard();
+    document.getElementById('cashierNameInput').value = '';
+    updateLiveTimestamp();
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    updateLiveTimestamp();
+  });
+</script>
+</body>
+</html>
