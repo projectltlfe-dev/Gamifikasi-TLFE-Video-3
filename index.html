@@ -18,7 +18,7 @@ html,body{height:100%;background:#14161d;overflow:hidden;overscroll-behavior:non
 body{font-family:var(--hand);color:var(--ink);-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;cursor:pointer}
 button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-offset:3px}
-#app{position:absolute;left:50%;top:0;width:100%;height:650px;transform-origin:top center;overflow:hidden;background:linear-gradient(180deg,#e4eef4 0%,#d5e3ec 62%,#c8d7e1 100%)}
+#app{position:absolute;left:50%;top:0;width:100%;height:600px;transform-origin:top center;overflow:hidden;background:linear-gradient(180deg,#e4eef4 0%,#d5e3ec 62%,#c8d7e1 100%)}
 .wallpat{position:absolute;inset:0;background-image:radial-gradient(rgba(30,50,80,.07) 1.5px,transparent 1.7px);background-size:26px 26px}
 .glow{position:absolute;left:50%;top:52%;width:1400px;height:1400px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,240,205,.45),transparent 32%);pointer-events:none}
 .vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 50%,rgba(40,35,25,.28))}
@@ -49,7 +49,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-o
 .ovl{position:absolute;inset:0;z-index:20;display:grid;place-items:center;padding:18px;opacity:0;pointer-events:none;transition:opacity .4s}
 .ovl.show{opacity:1;pointer-events:auto}
 .ovl.dim{background:rgba(4,6,12,.55)}
-.paper{position:relative;width:min(100%,480px);max-height:614px;overflow:hidden;padding:18px 18px 16px 38px;color:var(--ink);background:repeating-linear-gradient(transparent 0 29px,#dde6f3 29px 30px),var(--paper);border:3px solid var(--ink);border-radius:18px;box-shadow:0 7px 0 var(--ink);transform:translateY(14px) rotate(-.6deg);transition:transform .4s cubic-bezier(.3,1.5,.5,1)}
+.paper{position:relative;width:min(100%,480px);max-height:548px;overflow:hidden;padding:18px 18px 16px 38px;color:var(--ink);background:repeating-linear-gradient(transparent 0 29px,#dde6f3 29px 30px),var(--paper);border:3px solid var(--ink);border-radius:18px;box-shadow:0 7px 0 var(--ink);transform:translateY(14px) rotate(-.6deg);transition:transform .4s cubic-bezier(.3,1.5,.5,1)}
 .ovl.show .paper{transform:none}
 .paper::before{content:"";position:absolute;top:0;bottom:0;left:20px;width:2px;background:#ff9b9b}
 .paper h2{font-family:var(--hand);font-weight:400;font-size:clamp(24px,6vw,30px);line-height:1.05;margin-bottom:6px}
@@ -138,7 +138,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-o
 /* feedback paper */
 .modal-overlay{position:absolute;inset:0;z-index:50;display:grid;place-items:center;padding:18px;background:rgba(4,6,12,.55);opacity:0;pointer-events:none;transition:opacity .3s}
 .modal-overlay.show{opacity:1;pointer-events:auto}
-.modal-dialogue-card{position:relative;width:min(100%,460px);max-height:614px;overflow:hidden;background:var(--paper);border:3px solid var(--ink);border-radius:18px;box-shadow:0 7px 0 var(--ink);padding:18px 18px 16px;transform:translateY(14px);transition:transform .35s cubic-bezier(.3,1.5,.5,1)}
+.modal-dialogue-card{position:relative;width:min(100%,460px);max-height:548px;overflow:hidden;background:var(--paper);border:3px solid var(--ink);border-radius:18px;box-shadow:0 7px 0 var(--ink);padding:18px 18px 16px;transform:translateY(14px);transition:transform .35s cubic-bezier(.3,1.5,.5,1)}
 .modal-overlay.show .modal-dialogue-card{transform:none}
 .feedback-meta{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px}
 .revealed-tag{display:inline-block;font-family:var(--round);font-weight:600;font-size:14px;padding:1px 10px;border-radius:99px;border:2px solid var(--ink)}
@@ -428,8 +428,8 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-o
     try { window.top.postMessage("scoreBarFound", "*"); } catch (e) { console.warn("LMS postMessage (top) gagal.", e); }
   }
 
-  /* ===== Stage 650 px + auto-fit (tanpa scroll) ===== */
-  const STAGE_H = 650, STAGE_MAX_W = 900;
+  /* ===== Stage 600 px + auto-fit (tanpa scroll) ===== */
+  const STAGE_H = 600, STAGE_MAX_W = 900;
   function fitStage() {
     const app = document.getElementById('app');
     const vw = window.innerWidth, vh = window.innerHeight;
@@ -443,7 +443,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-o
     if (!box || !inner || !box.clientHeight) return;
     inner.style.zoom = ''; inner.style.transform = ''; inner.style.width = '';
     let z = 1;
-    const over = () => box.scrollHeight > box.clientHeight + 1;
+    const over = () => box.scrollHeight > box.clientHeight;
     while (over() && z > 0.45) {
       z = Math.round((z - 0.03) * 100) / 100;
       if (HAS_ZOOM) { inner.style.zoom = z; }
