@@ -185,13 +185,13 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-o
 .tut-sub{font-size:15px;line-height:1.2;margin:0 0 8px;color:#3b3a35}
 .tut-sub b{color:var(--ink)}
 .demo{position:relative;background:#dfeaf7;border:2.5px solid var(--ink);border-radius:12px;padding:8px 10px 8px;margin-bottom:8px;overflow:hidden}
-.demo-tag{position:absolute;right:8px;top:6px;z-index:8;background:var(--warn);border:2px solid var(--ink);font-family:var(--round);font-weight:700;font-size:10px;letter-spacing:.06em;padding:0 8px;border-radius:99px}
-.dm-meter{display:flex;align-items:center;gap:6px;font-family:var(--round);font-weight:600;font-size:11px;margin:0 74px 6px 0}
-.dm-lbl{white-space:nowrap}
+.demo-tag{display:table;margin:0 0 4px auto;background:var(--warn);border:2px solid var(--ink);font-family:var(--round);font-weight:700;font-size:10px;letter-spacing:.06em;padding:0 8px;border-radius:99px}
+.dm-meter{display:flex;align-items:center;gap:6px;font-family:var(--round);font-weight:600;font-size:11px}
+.dm-lbl{white-space:nowrap;font-size:10.5px}
 .dm-bar{flex:1;min-width:30px;height:9px;border-radius:4px;background:#252a35;border:2px solid var(--ink);overflow:hidden}
 .dm-fill{display:block;height:100%;width:20%;background:var(--good);animation:dmfill 7s ease-in-out infinite}
-.dm-val{position:relative;display:inline-block;width:2.6em;height:1.2em}
-.dm-val b{position:absolute;left:0;top:0}
+.dm-val{position:relative;display:inline-block;flex:none;width:2.8em;height:1.2em;line-height:1.2;text-align:right}
+.dm-val b{position:absolute;right:0;top:0;line-height:1.2}
 .dm-val .v1{animation:dmv1 7s infinite}.dm-val .v2{opacity:0;animation:dmv2 7s infinite}
 .dm-scene{background:var(--paper);border:2px solid var(--ink);border-radius:9px;padding:5px 9px;margin-bottom:6px}
 .dm-scene b{display:block;font-family:var(--hand);font-weight:400;font-size:17px;line-height:1.05}
@@ -217,12 +217,101 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-o
   0%,33%{opacity:0;transform:translateY(5px)}
   40%,88%{opacity:1;transform:none}
   95%,100%{opacity:0;transform:none}}
-@keyframes dmfill{0%,33%{width:20%}44%,88%{width:30%}96%,100%{width:20%}}
+@keyframes dmfill{0%,33%{width:20%}44%,88%{width:45%}96%,100%{width:20%}}
+/* sorotan meteran kepuasan pelanggan pada contoh */
+.dm-meter{position:relative;background:#121722;color:#ff9a6a;border:3px solid #ffd34d;border-radius:10px;padding:4px 8px;margin:6px 0 4px 0;animation:dmglow 7s ease-in-out infinite}
+.dm-meter .dm-val{color:#fff}
+.dm-plus{flex:none;background:#1fae7a;color:#fff;border:2px solid var(--ink);border-radius:99px;font-family:var(--round);font-weight:700;font-size:12px;padding:0 7px;opacity:0;animation:dmplus 7s ease-in-out infinite}
+.dm-note{display:flex;align-items:center;justify-content:space-between;gap:8px;font-family:var(--round);font-weight:600;font-size:12.5px;line-height:1.1;margin:0 0 6px;color:#14151b}
+@keyframes dmglow{
+  0%,30%{box-shadow:0 0 0 0 rgba(255,211,77,0)}
+  15%{box-shadow:0 0 0 5px rgba(255,211,77,.55)}
+  40%,88%{box-shadow:0 0 0 5px rgba(255,211,77,.85),0 0 14px 4px rgba(255,211,77,.8)}
+  96%,100%{box-shadow:0 0 0 0 rgba(255,211,77,0)}}
+@keyframes dmplus{0%,36%{opacity:0;transform:translateY(8px) scale(.6)}44%,88%{opacity:1;transform:none}96%,100%{opacity:0;transform:none}}
 @keyframes dmv1{0%,33%{opacity:1}38%,90%{opacity:0}96%,100%{opacity:1}}
 @keyframes dmv2{0%,33%{opacity:0}38%,90%{opacity:1}96%,100%{opacity:0}}
-@media (prefers-reduced-motion:reduce){.dm-fill,.dm-val b,.dm-opt.pick,.dhand,.dm-toast{animation:none!important}.dm-fill{width:30%}.dm-val .v1,.dhand{opacity:0}.dm-val .v2,.dm-toast{opacity:1}.dm-opt.pick{background:var(--yellow-light)}}
+@media (prefers-reduced-motion:reduce){.dm-fill,.dm-val b,.dm-opt.pick,.dhand,.dm-toast,.dm-meter,.dm-plus{animation:none!important}.dm-plus{opacity:1}.dm-meter{box-shadow:0 0 0 4px rgba(255,211,77,.8)}.dm-fill{width:45%}.dm-val .v1,.dhand{opacity:0}.dm-val .v2,.dm-toast{opacity:1}.dm-opt.pick{background:var(--yellow-light)}}
 .guide-list{gap:5px;margin:4px 0 6px}
 .gi{font-size:14.5px}
+
+/* ===== Revisi: Pak Ferdi bicara, satu meter, font lebih besar, skenario lebih kompak ===== */
+.spon{background:linear-gradient(transparent 52%,#ffd34d 52%);color:inherit;font-weight:700;padding:0 2px;border-radius:2px}
+.ch{opacity:0}.ch.on{opacity:1}
+
+/* Pak Ferdi */
+.talk{display:flex;align-items:flex-start;gap:12px}
+.fwrap{position:relative;flex:none;height:var(--fh,220px);aspect-ratio:521/2003;animation:ferdiIn .55s cubic-bezier(.3,1.5,.5,1) both}
+.fwrap::before{content:"";position:absolute;left:-35%;right:-35%;bottom:-2px;height:9px;border-radius:50%;background:rgba(20,21,27,.25)}
+.ferdi{position:relative;width:100%;height:100%;background:url(data:image/png;base64,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) center bottom/contain no-repeat;transform-origin:50% 100%}
+.ferdi.talking{animation:ferdiTalk .46s ease-in-out infinite}
+@keyframes ferdiIn{0%{opacity:0;transform:translateX(-28px) scale(.94)}100%{opacity:1;transform:none}}
+@keyframes ferdiTalk{0%,100%{transform:scale(1,1) rotate(0)}30%{transform:scale(1.02,.985) rotate(-1deg)}65%{transform:scale(.99,1.012) rotate(1deg)}}
+.bubble{position:relative;flex:1;min-width:0;margin-top:6px;background:#fff;border:3px solid var(--ink);border-radius:16px;box-shadow:0 4px 0 var(--ink);padding:7px 12px 10px;cursor:default}
+.bubble::before{content:"";position:absolute;left:-14px;top:var(--tt,40px);border:9px solid transparent;border-right:12px solid var(--ink);border-left:0}
+.bubble::after{content:"";position:absolute;left:-8px;top:calc(var(--tt,40px) + 2px);border:7px solid transparent;border-right:9px solid #fff;border-left:0}
+.bubble.t-blue{background:#eaf5ff}.bubble.t-blue::after{border-right-color:#eaf5ff}
+.bubble.t-yellow{background:#fff7d6}.bubble.t-yellow::after{border-right-color:#fff7d6}
+.bubble.t-red{background:#ffeaea}.bubble.t-red::after{border-right-color:#ffeaea}
+.who{display:inline-block;font-family:var(--round);font-weight:600;font-size:12.5px;background:var(--orange);border:2px solid var(--ink);border-radius:99px;padding:0 9px;margin-bottom:4px}
+.said{font-size:19px;line-height:1.22;color:var(--ink);margin:0!important}
+.said b{font-weight:700}
+
+/* briefing */
+.talkwrap{width:min(100%,520px);max-height:548px;overflow:hidden}
+.talkwrap .talk{margin-bottom:16px}
+.talkwrap .said{font-size:20px}
+
+/* tutorial */
+.spon-banner{font-family:var(--round);font-weight:600;font-size:16px;text-align:center;background:#fff3c4;border:2.5px solid var(--ink);border-radius:12px;padding:3px 8px;margin:0 0 8px;animation:sponPulse 1.6s ease-in-out infinite}
+@keyframes sponPulse{50%{transform:scale(1.03)}}
+@keyframes dmfill{0%,33%{width:20%}44%,88%{width:45%}96%,100%{width:20%}}
+.tut-sub{font-size:17px}
+.gi{font-size:16px}
+.dm-opt{font-size:14.5px}
+.dm-scene b{font-size:18px}
+.dm-scene small{font-size:14px}
+
+/* header: hanya kepuasan pelanggan */
+.meters{grid-template-columns:1fr}
+.meter .row{font-size:15px}
+
+/* skenario: ilustrasi kecil, teks & pilihan jadi fokus */
+.scene-title{font-size:26px;line-height:1.05;margin:2px 0 5px}
+.scene-desc{font-size:19px;line-height:1.2}
+.visual-stage{float:right;width:104px;margin:0 0 4px 10px;border-width:2px;border-radius:10px}
+.visual-stage svg{max-height:none}
+.scene-card::after{content:"";display:block;clear:both}
+.choice-prompt{font-size:21px;margin:0 4px 6px;line-height:1.1}
+.choices-wrapper{gap:8px}
+.btn-choice{align-items:center;padding:7px 12px}
+.choice-bullet{width:30px;height:30px;font-size:15px}
+.choice-text{font-size:19px;line-height:1.14}
+
+/* feedback */
+.feedback-meta{margin-bottom:8px}
+.dialogue-bubble{font-size:18px;line-height:1.18;padding:8px 12px;margin-bottom:12px}
+.modal-dialogue-card .talk{margin-bottom:14px}
+.modal-dialogue-card .said{font-size:18px}
+.btn-continue{font-size:18px}
+
+/* jawaban Engaged di feedback */
+.eng-card{display:none;background:#e3f1ff;border:2.5px solid var(--ink);border-radius:12px;padding:7px 11px;margin:0 0 10px}
+.eng-card.show{display:block}
+.eng-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+.eng-card p{margin:0}
+.eng-text{font-size:16px;line-height:1.15;font-weight:600}
+.eng-dlg{font-size:15px;line-height:1.15;color:#2b303c;margin-top:3px!important}
+.eng-why{font-size:15px;line-height:1.15;color:#3b3a35;margin-top:3px!important}
+.eng-why b{color:var(--ink)}
+/* debrief */
+.dom-desc{font-size:17px}
+.score-row{font-size:15px}
+.closing{margin-bottom:10px}
+.closing .said{font-size:17.5px}
+@media (min-width:640px){.closing{margin-bottom:0}}
+
+@media (prefers-reduced-motion:reduce){.fwrap,.ferdi.talking,.spon-banner{animation:none!important}.dm-fill{width:45%}}
 </style>
 </head>
 <body>
@@ -239,15 +328,14 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-o
           <div class="scr-bg"></div>
           <div class="scr"><div class="scr-in">
             <span class="kicker">🕒 <span id="currentDateDisplay">Hari, tanggal</span></span>
-            <h1>Apa Sebenarnya Employee Engagement?</h1>
-            <p class="sub">Gamifikasi ini akan menguji kembali tingkat pemahaman Bapak/Ibu tentang Employee Engagement.</p>
+            <h1>Apa Sebenarnya <br> Employee Engagement?</h1>
             <div class="login">
-              <input type="text" id="cashierNameInput" placeholder="Ketik nama di sini..." maxlength="50" autocomplete="off" aria-label="Nama Bapak/Ibu" onkeydown="if(event.key==='Enter')submitClockIn()">
+              <input type="text" id="cashierNameInput" placeholder="Ketik nama di sini" maxlength="50" autocomplete="off" aria-label="Nama Bapak/Ibu" onkeydown="if(event.key==='Enter')submitClockIn()">
               <button class="btn" onclick="submitClockIn()">Mulai<br>Gamifikasi</button>
             </div>
             <div id="nameInputError" class="field-hint">Mohon isi nama Bapak/Ibu terlebih dahulu</div></div>
           </div>
-          <div class="taskbar"><span class="ic"></span><span class="ic o"></span><span>Kontribusi CINTA: Kontribusi tambahan sukarela</span><span class="tm">07:00</span></div>
+          <div class="taskbar"><span class="ic"></span><span class="ic o"></span><span class="tm">07:00</span></div>
           <div class="scr-glare"></div>
         </div>
         <div class="sticky s1">TLFE</div>
@@ -256,15 +344,16 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-o
     </div>
   </div>
 
-  <!-- Briefing (kertas catatan) -->
+  <!-- Briefing: Pak Ferdi bicara langsung -->
   <div class="ovl dim" id="briefingScreen">
-    <div class="paper">
-      <div class="pin"><span class="ph"><i></i>Briefing awal shift</span>
-      <div class="boss"><div class="av">🙋🏻‍♂️</div><div><b>Bapak Ferdi</b><span class="mini">Chief of Store Toko IDM Jaya</span></div></div>
-      <h2>Selamat bekerja, Bapak/Ibu <span id="briefingCashierName">Kasir</span>!</h2>
-      <p>Pada gamifikasi ini, Bapak/Ibu akan berperan sebagai kasir yang targetnya bukan hanya sales, tapi juga <b>Kepuasan Pelanggan</b> dan <b>Kekompakan Tim</b>.</p>
-      <div class="note">⚡ Setiap respons yang Bapak/Ibu ambil menentukan pelanggan pulang dengan puas atau kecewa, serta memengaruhi moral tim kerja.</div>
-      <button class="btn big" onclick="showGuide()">Lanjut: Petunjuk Pengerjaan →</button></div>
+    <div class="talkwrap">
+      <div class="pin">
+        <div class="talk" style="--fh:360px;--tt:66px">
+          <div class="fwrap"><div class="ferdi" id="bFerdi"></div></div>
+          <div class="bubble"><span class="who">Pak Ferdi · Chief of Store</span><p class="said" id="briefSaid"></p></div>
+        </div>
+        <button class="btn big" onclick="showGuide()">Instruksi dan Petunjuk →</button>
+      </div>
     </div>
   </div>
 
@@ -272,40 +361,37 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-o
   <div class="ovl dim" id="guideScreen">
     <div class="paper">
       <div class="pin">
-        <span class="ph"><i></i>Tutorial pengerjaan</span>
-        <h2>Contoh Pengerjaan</h2>
-        <p class="tut-sub">Halo, Bapak/Ibu <b id="gName">Kasir</b>! Ada <b>10 skenario</b> yang harus dijalani. Perhatikan contoh singkat ini dulu sebelum mulai.</p>
+        <h2>Halo, Bapak/Ibu <b id="gName">Kasir</b></h2>
+        <p class="tut-sub">Yuk, lihat contohnya!</p>
 
+        <span class="demo-tag">CONTOH</span>
         <div class="demo" aria-label="Animasi contoh cara memilih respons pada skenario">
-          <span class="demo-tag">CONTOH</span>
-          <div class="dm-meter"><span class="dm-lbl">❤️ Kepuasan Pelanggan</span><div class="dm-bar"><i class="dm-fill"></i></div><span class="dm-val"><b class="v1">20%</b><b class="v2">30%</b></span></div>
-          <div class="dm-scene"><b>Pelanggan Mencari Minyak Angin</b><small>Seorang pelanggan tampak bingung mondar-mandir di lorong.</small></div>
+          <div class="dm-meter"><span class="dm-lbl">❤️ Kepuasan Pelanggan</span><div class="dm-bar"><i class="dm-fill"></i></div><span class="dm-val"><b class="v1">20%</b><b class="v2">45%</b></span></div>
+          <div class="dm-note"><span>Pilihan yang <mark class="spon">benar</mark> akan <mark class="spon">menambah</mark> meteran ini!</span><span class="dm-plus">+25%</span></div>
+          <div class="dm-scene"><b>Antrean Mulai Memanjang</b><small>Pelanggan di belakang mulai melirik jam.</small></div>
           <div class="dm-opts">
-            <div class="dm-opt"><i>A</i><span>Menjawab singkat tanpa menoleh dari layar kasir.</span></div>
-            <div class="dm-opt"><i>B</i><span>Menunjukkan arah dari balik meja kasir.</span></div>
-            <div class="dm-opt pick"><i>C</i><span>Mengantar pelanggan langsung ke rak.</span><em class="dhand">👆</em></div>
+            <div class="dm-opt"><i>A</i><span>Scan santai, antrean urusan nanti.</span></div>
+            <div class="dm-opt"><i>B</i><span>Scan satu per satu sesuai SOP.</span></div>
+            <div class="dm-opt pick"><i>C</i><span>Panggil rekan buka kasir sebelah.</span><em class="dhand">👆</em></div>
           </div>
-          <div class="dm-toast">🔵 Engaged · Kepuasan +10% · Moral +10%</div>
+          <div class="dm-toast">🔵 Engaged · Kepuasan +25%</div>
         </div>
 
-        <div class="guide-list">
-          <div class="gi"><span class="gn">1</span><span><b>Baca situasinya,</b> lalu sentuh <b>satu dari tiga respons (A, B, C)</b> yang paling menggambarkan tindakan Bapak/Ibu. Urutan pilihan diacak.</span></div>
-          <div class="gi"><span class="gn">2</span><span><b>Lihat hasilnya:</b> tipe sikap, reaksi pelanggan/rekan, dan perubahan meter <b>❤️ Kepuasan</b> &amp; <b>🤝 Moral Tim</b>. Pilihan tidak dapat diubah.</span></div>
+        <div class="guide-list" style="margin-bottom:10px">
+          <div class="gi"><span class="gn">1</span><span>Baca situasinya, pilih <b>satu dari tiga respons</b> yang tersedia.</span></div>
+          <div class="gi"><span class="gn">2</span><span>Setiap respon yang Bapak/Ibu ambil <b>menentukan pelanggan pulang dengan puas atau kecewa.</b></span></div>
         </div>
-        <div class="gtypes"><span class="revealed-tag tag-blue">🔵 Engaged</span><span class="revealed-tag tag-yellow">🟡 Satisfied</span><span class="revealed-tag tag-red">🔴 Disengaged</span></div>
-        <p class="mini" style="margin:4px 0 8px">Jawab sesuai respons yang paling mungkin Bapak/Ibu lakukan di situasi nyata. Tombol 🎵 di kanan atas mengatur musik latar.</p>
-        <button class="btn big" onclick="startSimulatedShift()">Saya Mengerti, Mulai!</button>
+                <button class="btn big" onclick="startSimulatedShift()">Sudah siap, ayo mulai!</button>
       </div>
     </div>
   </div>
 
-  <!-- Game -->
+<!-- Game -->
   <div class="game">
     <header class="overhead">
       <div class="hud"><div class="chip"><span class="em">🏪</span><span class="t">Toko IDM Jaya · <span id="activeCashierBadge">Kasir: -</span></span></div></div>
       <div class="meters">
         <div class="meter" style="--c:#ff9a6a"><div class="row"><span>❤️ Kepuasan Pelanggan</span><b id="csatScore">20%</b></div><div class="hbar" id="csatBar"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-        <div class="meter" style="--c:#5cc2ff"><div class="row"><span>🤝 Moral Tim Kerja</span><b id="moraleScore">20%</b></div><div class="hbar" id="moraleBar"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
       </div>
     </header>
     <div class="content-area" id="gameArea"></div>
@@ -313,13 +399,22 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-o
       <div class="modal-dialogue-card"><div class="mfit">
         <div class="feedback-meta"><span class="revealed-tag" id="revealedTag">Tipe Sikap</span><div class="delta-badges" id="deltaBadges"></div></div>
         <div class="dialogue-bubble" id="dialogueText"></div>
-        <div class="feedback-rationale" id="rationaleText"></div>
-        <button class="btn-continue" onclick="nextWave()">Lanjut skenario berikutnya</button></div>
-      </div>
+        <div class="talk" style="--fh:235px;--tt:46px">
+          <div class="fwrap" id="fWrap"><div class="ferdi" id="fFerdi"></div></div>
+          <div class="bubble" id="fBubble"><span class="who">Pak Ferdi</span><p class="said" id="ferdiText"></p></div>
+        </div>
+        <div class="eng-card" id="engCard">
+          <div class="eng-head"><span class="revealed-tag tag-blue">🔵 Jawaban Engaged</span></div>
+          <p class="eng-text" id="engText"></p>
+          <p class="eng-dlg" id="engDlg"></p>
+          <p class="eng-why" id="engWhy"></p>
+        </div>
+        <button class="btn-continue" id="nextBtn" onclick="nextWave()">Lanjut</button>
+      </div></div>
     </div>
   </div>
 
-  <div class="vig"></div>
+<div class="vig"></div>
   <button id="audioToggleBtn" onclick="toggleAudio()" aria-label="Musik latar"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12" fill="none" stroke="#14151b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.6" fill="#14151b"/><circle cx="16.5" cy="16" r="2.6" fill="#14151b"/></svg></button>
   <div id="copy"><span>© Education and Training Department 2026</span></div>
 </div>
@@ -327,110 +422,186 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-o
 <script>
   let audioContext = null;
   let audioEnabled = true;
-  let bgmTimeout = null;
-  let noteIdx = 0;
+  
   let cashierName = "Kasir";
   const ICON_ON='<svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12" fill="none" stroke="#14151b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.6" fill="#14151b"/><circle cx="16.5" cy="16" r="2.6" fill="#14151b"/></svg>';
   const ICON_OFF=ICON_ON.replace('</svg>','<line x1="3" y1="3" x2="21" y2="21" stroke="#e54848" stroke-width="2.6" stroke-linecap="round"/></svg>');
   const CAT={blue:['Engaged','b'],yellow:['Satisfied','y'],red:['Disengaged','r']};
 
-  const melody = [
-     261.63, 329.63, 392.00, 523.25,
-     349.23, 440.00, 523.25, 698.46,
-     392.00, 493.88, 587.33, 783.99,
-     523.25, 392.00, 329.63, 261.63
-  ];
+    /* ===== Musik latar (Web Audio, tanpa file audio): tempo pelan, beda tiap halaman/skenario/jawaban ===== */
+  let master = null, bus = null, musicTimer = null, currentKey = null, nextT = 0, barIdx = 0;
+  const NOTE_BASE = {C:0, D:2, E:4, F:5, G:7, A:9, B:11};
+  const mf = s => { const m = /^([A-G])(#|b)?(\d)$/.exec(s); const n = NOTE_BASE[m[1]] + (m[2] === '#' ? 1 : m[2] === 'b' ? -1 : 0) + (+m[3] + 1) * 12; return 440 * Math.pow(2, (n - 69) / 12); };
+
+  /* c = akor, b = bass, m = melodi [nada, jumlah ketuk]; arp: step (ketuk), seq (urutan nada akor) */
+  const TRACKS = {
+    // Halaman briefing & tutorial: hangat dan ramah
+    briefing: {bpm: 80, beats: 4, vol: 1, aw: 'triangle', arp: {step: .5, seq: [0,1,2,3,2,1,2,1]}, bars: [
+      {c:['C3','E3','G3','C4'], b:'C2', m:[['E5',1],['G5',1],['A5',1],['G5',1]]},
+      {c:['A2','C3','E3','A3'], b:'A1', m:[['E5',2],['C5',1],['D5',1]]},
+      {c:['F2','A2','C3','F3'], b:'F1', m:[['C5',1],['F5',1],['A5',1],['G5',1]]},
+      {c:['G2','B2','D3','G3'], b:'G1', m:[['F5',1],['E5',1],['D5',2]]}]},
+    // Skenario 1 (pagi): cerah dan segar
+    s0: {bpm: 88, beats: 4, vol: 1, aw: 'triangle', arp: {step: .5, seq: [0,2,1,2,3,2,1,2]}, bars: [
+      {c:['G3','B3','D4','G4'], b:'G2', m:[['B5',1],['D6',1],['B5',1],['G5',1]]},
+      {c:['D3','F#3','A3','D4'], b:'D2', m:[['A5',1],['F#5',1],['A5',2]]},
+      {c:['E3','G3','B3','E4'], b:'E2', m:[['G5',1],['B5',1],['E6',1],['D6',1]]},
+      {c:['C3','E3','G3','C4'], b:'C2', m:[['C6',2],['B5',1],['A5',1]]}]},
+    // Skenario 2 (stok kosong): sedikit bimbang
+    s1: {bpm: 72, beats: 4, vol: 1, aw: 'triangle', arp: {step: .5, seq: [0,2,1,2,0,2,1,2]}, bars: [
+      {c:['A2','C3','E3','A3'], b:'A1', m:[['E5',2],[null,1],['C5',1]]},
+      {c:['F2','A2','C3','F3'], b:'F1', m:[['A5',2],['G5',1],['E5',1]]},
+      {c:['D3','F3','A3','D4'], b:'D2', m:[['F5',2],[null,1],['A5',1]]},
+      {c:['E3','G#3','B3','E4'], b:'E2', m:[['G#5',2],['B5',1],['G#5',1]]}]},
+    // Skenario 3 (kakek): lembut seperti kotak musik, irama 3/4
+    s2: {bpm: 66, beats: 3, vol: 1, aw: 'sine', arp: {waltz: true}, bars: [
+      {c:['A3','C4','F4'], b:'F2', m:[['A5',2],['C6',1]]},
+      {c:['A3','D4','F4'], b:'D2', m:[['D6',1],['C6',1],['A5',1]]},
+      {c:['Bb3','D4','F4'], b:'Bb1', m:[['Bb5',2],['A5',1]]},
+      {c:['G3','C4','E4'], b:'C2', m:[['G5',2],['C6',1]]},
+      {c:['A3','C4','F4'], b:'F2', m:[['C6',1.5],['A5',.5],['F5',1]]},
+      {c:['G3','Bb3','D4'], b:'G2', m:[['Bb5',1],['A5',1],['G5',1]]},
+      {c:['G3','C4','E4'], b:'C2', m:[['E5',2],['G5',1]]},
+      {c:['A3','C4','F4'], b:'F2', m:[['F5',3]]}]},
+    // Skenario 4 (es krim jatuh): ceria tapi sedikit riuh
+    s3: {bpm: 92, beats: 4, vol: 1, aw: 'triangle', arp: {step: .5, seq: [0,2,1,2,3,2,1,2]}, bars: [
+      {c:['F3','A3','C4','F4'], b:'F2', m:[['A5',1],['C6',1],['A5',1],['F5',1]]},
+      {c:['Bb2','D3','F3','Bb3'], b:'Bb1', m:[['D6',1],['C6',1],['Bb5',2]]},
+      {c:['C3','E3','G3','C4'], b:'C2', m:[['G5',1],['C6',1],['E6',1],['C6',1]]},
+      {c:['F3','A3','C4','F4'], b:'F2', m:[['A5',2],['G5',1],['F5',1]]}]},
+    // Skenario 5 (menjelang tutup): tenang, malam hari
+    s4: {bpm: 68, beats: 4, vol: 1, aw: 'sine', arp: {step: 1, seq: [0,2,1,2]}, bars: [
+      {c:['D3','F3','A3','D4'], b:'D2', m:[['A5',2],['F5',1],['D5',1]]},
+      {c:['Bb2','D3','F3','Bb3'], b:'Bb1', m:[['D6',2],['C6',1],['Bb5',1]]},
+      {c:['F3','A3','C4','F4'], b:'F2', m:[['C6',2],['A5',1],['F5',1]]},
+      {c:['A2','C#3','E3','A3'], b:'A1', m:[['E5',2],['A5',2]]}]},
+    // Halaman debrief: hangat dan lega
+    debrief: {bpm: 88, beats: 4, vol: 1, aw: 'triangle', arp: {step: .5, seq: [0,1,2,3,2,1,2,3]}, bars: [
+      {c:['D3','F#3','A3','D4'], b:'D2', m:[['F#5',1],['A5',1],['D6',2]]},
+      {c:['A2','C#3','E3','A3'], b:'A1', m:[['C#6',1],['E6',1],['A5',2]]},
+      {c:['B2','D3','F#3','B3'], b:'B1', m:[['D6',1],['B5',1],['F#5',2]]},
+      {c:['G2','B2','D3','G3'], b:'G1', m:[['B5',1],['A5',1],['G5',1],['A5',1]]}]},
+    // Jawaban Disengaged: pelan, minor, menurun, murung
+    red: {bpm: 56, beats: 4, vol: 1.3, aw: 'sine', mw: 'triangle', arp: {pad: true}, intro: (c, o, t) => glide(c, o, t, 330, 110, 1.1), bars: [
+      {c:['D3','F3','A3'], b:'D2', m:[['A4',1],['G4',1],['F4',1],['E4',1]]},
+      {c:['G2','Bb2','D3'], b:'G1', m:[['F4',1],['E4',1],['D4',2]]}]},
+    // Jawaban Satisfied: tenang dan manis, tapi belum tuntas (berhenti di nada yang menggantung)
+    yellow: {bpm: 76, beats: 4, vol: 1.3, aw: 'triangle', arp: {step: 1, seq: [0,2,1,2]}, intro: (c, o, t) => chime(c, o, t, ['C5','E5'], .22), bars: [
+      {c:['C3','E3','G3','C4'], b:'C2', m:[['E5',1],['G5',1],['E5',1],['D5',1]]},
+      {c:['F2','A2','C3','F3'], b:'F1', m:[['F5',1],['A5',1],['G5',1],['E5',1]]},
+      {c:['A2','C3','E3','A3'], b:'A1', m:[['E5',2],['D5',1],['C5',1]]},
+      {c:['G2','B2','D3','G3'], b:'G1', m:[['D5',2],['E5',1],['D5',1]]}]},
+    // Jawaban Engaged: cerah, naik, meriah
+    blue: {bpm: 96, beats: 4, vol: 1.35, aw: 'triangle', arp: {step: .5, seq: [0,2,1,2,3,2,1,2]}, intro: (c, o, t) => chime(c, o, t, ['C5','E5','G5','C6','E6','G6'], .085), bars: [
+      {c:['C3','E3','G3','C4'], b:'C2', m:[['C6',.5],['E6',.5],['G6',1],['E6',1],['C6',1]]},
+      {c:['G2','B2','D3','G3'], b:'G1', m:[['B5',.5],['D6',.5],['G6',1],['F6',1],['D6',1]]},
+      {c:['A2','C3','E3','A3'], b:'A1', m:[['A5',.5],['C6',.5],['E6',1],['D6',1],['C6',1]]},
+      {c:['F2','A2','C3','F3'], b:'F1', m:[['C6',1],['A5',1],['G5',1],['F5',1]]}]}
+  };
+
+  function voice(ctx, out, f, t, d, type, v, o) {
+    o = o || {};
+    const a = o.a || .012, r = o.r || .2;
+    const os = ctx.createOscillator(), g = ctx.createGain();
+    os.type = type; os.frequency.setValueAtTime(f, t);
+    g.gain.setValueAtTime(.0001, t);
+    g.gain.linearRampToValueAtTime(v, t + a);
+    if (o.hold) g.gain.setValueAtTime(v, t + Math.max(a + .01, d));
+    g.gain.exponentialRampToValueAtTime(.0001, t + d + r);
+    os.connect(g); g.connect(out);
+    os.start(t); os.stop(t + d + r + .05);
+  }
+  function glide(ctx, out, t, f0, f1, d) {
+    const os = ctx.createOscillator(), g = ctx.createGain(), lp = ctx.createBiquadFilter();
+    os.type = 'sawtooth'; lp.type = 'lowpass'; lp.frequency.value = 700;
+    os.frequency.setValueAtTime(f0, t); os.frequency.exponentialRampToValueAtTime(f1, t + d);
+    g.gain.setValueAtTime(.0001, t); g.gain.linearRampToValueAtTime(.07, t + .05); g.gain.exponentialRampToValueAtTime(.0001, t + d + .1);
+    os.connect(lp); lp.connect(g); g.connect(out); os.start(t); os.stop(t + d + .2);
+  }
+  function chime(ctx, out, t, notes, gap) {
+    notes.forEach((n, i) => { voice(ctx, out, mf(n), t + i * gap, .25, 'sine', .09, {r: .5}); voice(ctx, out, mf(n) * 2, t + i * gap, .15, 'sine', .025, {r: .3}); });
+  }
+
+  function scheduleBar(ctx, out, tr, bi, t0) {
+    const spb = 60 / tr.bpm, B = tr.bars[bi], aw = tr.aw || 'triangle', mw = tr.mw || 'sine';
+    const bf = mf(B.b), cf = B.c.map(mf);
+    // bass
+    if (tr.beats === 3) voice(ctx, out, bf, t0, spb * 2.4, 'sine', .12, {r: .3});
+    else { voice(ctx, out, bf, t0, spb * 1.8, 'sine', .12, {r: .3}); voice(ctx, out, bf, t0 + spb * 2, spb * 1.8, 'sine', .1, {r: .3}); }
+    // pengiring
+    const A = tr.arp;
+    if (A.pad) cf.forEach(f => voice(ctx, out, f, t0, spb * tr.beats * .9, aw, .035, {a: .25, r: .6, hold: true}));
+    else if (A.waltz) [1, 2].forEach(k => cf.forEach(f => voice(ctx, out, f, t0 + k * spb, spb * .6, aw, .028, {r: .35})));
+    else for (let i = 0; i * A.step < tr.beats; i++) voice(ctx, out, cf[A.seq[i % A.seq.length]], t0 + i * A.step * spb, A.step * spb * 1.5, aw, .05, {r: .15});
+    // melodi (bunyi lonceng lembut)
+    let bt = 0;
+    B.m.forEach(([n, len]) => {
+      if (n) { const f = mf(n), d = len * spb * .9; voice(ctx, out, f, t0 + bt * spb, d, mw, .075, {r: .5}); voice(ctx, out, f * 2, t0 + bt * spb, d * .6, 'sine', .02, {r: .3}); }
+      bt += len;
+    });
+  }
 
   function initAudio() {
     if (!audioContext) {
-      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      audioContext = new AC();
+      master = audioContext.createGain(); master.gain.value = .9;
+      const comp = audioContext.createDynamicsCompressor();
+      master.connect(comp); comp.connect(audioContext.destination);
+    }
+    if (audioContext.state === 'suspended') audioContext.resume();
+  }
+  function makeBus(vol) {
+    const g = audioContext.createGain(), lp = audioContext.createBiquadFilter();
+    lp.type = 'lowpass'; lp.frequency.value = 3400;
+    g.gain.value = .0001; g.connect(lp); lp.connect(master);
+    g.gain.setTargetAtTime(vol, audioContext.currentTime, .08);
+    return {g, lp};
+  }
+  function musicTick() {
+    const tr = TRACKS[currentKey]; if (!tr || !bus) return;
+    const barD = 60 / tr.bpm * tr.beats;
+    while (nextT < audioContext.currentTime + 1.4) {
+      scheduleBar(audioContext, bus.g, tr, barIdx, nextT);
+      nextT += barD; barIdx = (barIdx + 1) % tr.bars.length;
     }
   }
-
-  function playBGM() {
-    if (!audioEnabled || !audioContext) return;
+  function stopMusic() {
+    if (musicTimer) { clearInterval(musicTimer); musicTimer = null; }
+    if (bus && audioContext) {
+      const b = bus; bus = null;
+      b.g.gain.setTargetAtTime(.0001, audioContext.currentTime, .07);
+      setTimeout(() => { try { b.g.disconnect(); b.lp.disconnect(); } catch (e) {} }, 900);
+    }
+  }
+  function startTrack(key) {
+    currentKey = key;
+    if (!audioEnabled || !audioContext || !TRACKS[key]) return;
     try {
-      const now = audioContext.currentTime;
-      const freq = melody[noteIdx];
-      
-      const osc = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-      
-      osc.type = 'square'; 
-      osc.frequency.value = freq;
-      
-      gain.gain.setValueAtTime(0, now);
-      gain.gain.linearRampToValueAtTime(0.025, now + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
-      
-      osc.connect(gain);
-      gain.connect(audioContext.destination);
-      osc.start(now);
-      osc.stop(now + 0.15);
-
-      noteIdx = (noteIdx + 1) % melody.length;
-      bgmTimeout = setTimeout(playBGM, 150); 
-    } catch (e) {
-      console.warn("Audio BGM Gagal", e);
-    }
+      stopMusic();
+      initAudio();
+      const tr = TRACKS[key];
+      bus = makeBus(.7 * (tr.vol || 1));
+      barIdx = 0; nextT = audioContext.currentTime + .1;
+      if (tr.intro) tr.intro(audioContext, bus.g, nextT);
+      musicTick();
+      musicTimer = setInterval(musicTick, 250);
+    } catch (e) { console.warn('Audio gagal', e); }
   }
-
-  function stopBGM() {
-    if (bgmTimeout) {
-      clearTimeout(bgmTimeout);
-      bgmTimeout = null;
-    }
-  }
-
-  function playEffect(type) {
-    if (!audioEnabled || !audioContext) return;
-    try {
-      const osc = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-      osc.connect(gain);
-      gain.connect(audioContext.destination);
-
-      const now = audioContext.currentTime;
-      if (type === 'blue') {
-        osc.frequency.setValueAtTime(523.25, now);
-        osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.15);
-        gain.gain.setValueAtTime(0.25, now);
-        gain.gain.linearRampToValueAtTime(0.01, now + 0.2);
-        osc.start(now);
-        osc.stop(now + 0.2);
-      } else if (type === 'yellow') {
-        osc.frequency.setValueAtTime(440, now);
-        gain.gain.setValueAtTime(0.18, now);
-        gain.gain.linearRampToValueAtTime(0.01, now + 0.12);
-        osc.start(now);
-        osc.stop(now + 0.12);
-      } else if (type === 'red') {
-        osc.frequency.setValueAtTime(220, now);
-        osc.frequency.exponentialRampToValueAtTime(146.83, now + 0.25);
-        gain.gain.setValueAtTime(0.25, now);
-        gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
-        osc.start(now);
-        osc.stop(now + 0.25);
-      }
-    } catch (e) {
-      console.warn("Audio Effect Gagal", e);
-    }
-  }
+  document.addEventListener('visibilitychange', () => {
+    if (!audioContext) return;
+    if (document.hidden) audioContext.suspend(); else if (audioEnabled) audioContext.resume();
+  });
 
   function toggleAudio() {
     audioEnabled = !audioEnabled;
     const btn = document.getElementById('audioToggleBtn');
-    if (audioEnabled) {
-      btn.innerHTML = ICON_ON;
-      initAudio();
-      playBGM();
-    } else {
-      btn.innerHTML = ICON_OFF;
-      stopBGM();
-    }
+    if (audioEnabled) { btn.innerHTML = ICON_ON; initAudio(); startTrack(currentKey); }
+    else { btn.innerHTML = ICON_OFF; stopMusic(); }
   }
 
-  function updateLiveTimestamp() {
+function updateLiveTimestamp() {
     const now = new Date();
     const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
     const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -445,7 +616,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-o
     if (elem) elem.innerText = formatted;
   }
 
-  function submitClockIn() {
+    function submitClockIn() {
     const input = document.getElementById('cashierNameInput');
     const val = input.value.trim();
     const errorEl = document.getElementById('nameInputError');
@@ -459,25 +630,29 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-o
 
     errorEl.style.display = 'none';
     cashierName = val;
-    document.getElementById('briefingCashierName').innerText = cashierName;
     document.getElementById('activeCashierBadge').innerText = `Kasir: ${cashierName}`;
     document.getElementById('gName').innerText = cashierName;
 
-    // Transisi dari layar Absensi ke Briefing Manager
+    // Musik dimulai dari klik pertama peserta (syarat browser)
+    initAudio();
+    startTrack('briefing');
+
     document.getElementById('clockInScreen').classList.remove('show');
     document.getElementById('briefingScreen').classList.add('show');
+    const bf = document.getElementById('bFerdi');
+    replayEnter(bf.parentNode);
+    const html = `Halo, Bapak/Ibu <b>${esc(cashierName)}</b>! Ada <b>5 situasi</b> yang terjadi di toko. Pilih respon yang <b>paling kamu banget, secara spontan ya</b>, nggak usah dipikirin terlalu lama!<p><br>Targetnya satu: Bikin <b>kepuasan pelanggan</b> naik!`;
+    typeInto(document.getElementById('briefSaid'), html, bf, 500);
     fitAll();
   }
 
   function startSimulatedShift() {
     document.getElementById('guideScreen').classList.remove('show');
     document.getElementById('app').classList.add('playing');
-    initAudio();
-    playBGM();
     renderScene();
   }
 
-  function notifyLMS() {
+function notifyLMS() {
     try { window.parent.postMessage("scoreBarFound", "*"); } catch (e) { console.warn("LMS postMessage (parent) gagal.", e); }
     try { window.top.postMessage("scoreBarFound", "*"); } catch (e) { console.warn("LMS postMessage (top) gagal.", e); }
   }
@@ -507,7 +682,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-o
   function fitAll() {
     const q = s => document.querySelector(s);
     fitBox(q('.scr'), q('.scr-in'));
-    fitBox(q('#briefingScreen .paper'), q('#briefingScreen .pin'));
+    fitBox(q('#briefingScreen .talkwrap'), q('#briefingScreen .pin'));
     fitBox(q('#guideScreen .paper'), q('#guideScreen .pin'));
     fitBox(q('.modal-dialogue-card'), q('.mfit'));
     const area = document.getElementById('gameArea');
@@ -573,302 +748,126 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-o
     fit();addEventListener('resize',fit);
   })();
 
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const REDUCED = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  /* 5 skenario. Dampak hanya ke Kepuasan Pelanggan. */
   const rawScenarios = [
     {
       time: "07:00 WIB",
-      title: "Buka Toko & Terdapat Noda <br> di Lantai Depan Kasir",
-      desc: "Shift pagi baru dimulai. Bapak/Ibu melihat jejak sepatu kotor dan cipratan lumpur di lantai depan meja kasir dari shift malam kemarin.",
+      title: "Buka Toko &amp; Terdapat Noda di Lantai Depan Kasir",
+      desc: "Shift pagi baru mulai. Ada jejak sepatu kotor dan cipratan lumpur di lantai depan kasir, sisa shift semalam.",
       visual: V[0],
       options: [
-        {
-          type: "red", tag: "🔴 Disengaged",
-          text: "Membiarkannya, karena pada jadwal, ada tim kerja lainnya yang bertugas untuk membersihkan area tersebut pada jam 09:00 pagi.",
-          csat: -10, morale: -10,
-          dialogue: "Pelanggan: 'Aduh, lantainya becek dan kotor ya... bikin sepatu saya jadi kotor deh.'",
-          rationale: "Respon tidak peka terhadap kondisi toko yang kotor memberikan kesan toko yang tidak terawat di mata pelanggan."
-        },
-        {
-          type: "yellow", tag: "🟡 Satisfied",
-          text: "Menandai area dengan papan penanda 'Lantai Licin' dan memberi tahu tim kerja lainnya yang bertugas untuk membersihkan area tersebut.",
-          csat: 5, morale: 5,
-          dialogue: "Bagus karena sudah berusaha untuk memberitahu pelanggan jika lantai licin, tetapi kenapa harus menunggu dan tidak langsung membersihkannya'",
-          rationale: "Kondisi yang tidak sesuai tidak dibiarkan begitu saja, namun pelanggan tetap melihat noda kotor di depan kasir."
-        },
-        {
-          type: "blue", tag: "🔵 Engaged",
-          text: "Inisiatif mengambil alat pel dan membersihkan noda sebelum pelanggan lewat.",
-          csat: 10, morale: 10,
-          dialogue: "Pelanggan: 'Wah, tokonya bersih dan wangi sekali pagi-pagi, jadi suka belanja di sini.'",
-          rationale: "Inisiatif ekstra Bapak/Ibu memastikan standar kebersihan toko terjaga dengan baik tanpa saling lempar tanggung jawab."
-        }
-      ]
-    },
-    {
-      time: "08:30 WIB",
-      title: "Pelanggan yang Tergesa-Gesa",
-      desc: "Jam padat berangkat kerja. Seorang pelanggan meletakkan roti dengan tangan gemetar sembari terus melirik jam tangannya.",
-      visual: V[1],
-      options: [
-        {
-          type: "red", tag: "🔴 Disengaged",
-          text: "Melakukan scan barang dengan santai sambil merapikan struk yang menumpuk tanpa menghiraukan kepanikan pelanggan.",
-          csat: -10, morale: -10,
-          dialogue: "Pelanggan: 'Duh, bisa lebih cepat nggak ya?! Saya jadi telat ke kantornya nih!'",
-          rationale: "Ketidakpedulian emosional menciptakan ketegangan dan membuat pelanggan merasa tidak dihargai."
-        },
-        {
-          type: "yellow", tag: "🟡 Satisfied",
-          text: "Melakukan scan barang dengan tenang dan teliti, kemudian menanyakan metode pembayaran sesuai urutan SOP dan menutup dengan salam.",
-          csat: 5, morale: 5,
-          dialogue: "Pelanggan: 'Terima kasih, struknya nggak usah...' (langsung lari terburu-buru keluar pintu).",
-          rationale: "Prosedur operasional kasir terlaksana, namun kurang tanggap membaca situasi darurat pelanggan."
-        },
-        {
-          type: "blue", tag: "🔵 Engaged",
-          text: "Melakukan scan barang dengan cepat. Karena sudah melihat pelanggan memegang uang tunai, langsung menyiapkan uang kembaliannya.",
-          csat: 10, morale: 10,
-          dialogue: "Pelanggan: 'Wah, terima kasih banyak ya pengertiannya! Saya jadi nggak telat ke kantornya deh!'",
-          rationale: "Empati situasional dan kecepatan pelayanan menciptakan sentuhan kepedulian di saat genting."
-        }
+        { type: "red", tag: "🔴 Disengaged", csat: -10,
+          text: "Biarkan saja. Sudah ada jadwal rekan kerja lain untuk bersih-bersih nanti di jam 09:00.",
+          dialogue: "Pelanggan: “Aduh, lantainya kotor banget… sepatu saya jadi ikut kotor deh.”",
+          ferdi: "Hmm, ini pilihan <b>Disengaged</b>. Noda dibiarkan, jadi toko terlihat kurang terawat. Perbuatan seperti ini bisa bikin <b>kepuasan pelanggan menurun</b>." },
+        { type: "yellow", tag: "🟡 Satisfied", csat: 10,
+          text: "Pasang papan “Lantai Licin”, lalu kabari tim yang bertugas bersih-bersih.",
+          dialogue: "Pelanggan: “Untung ada papan penanda, saya jadi bisa menghindar”",
+          ferdi: "Ini pilihan <b>Satisfied</b>. Sudah benar, pelanggan terlindungi dan <b>kepuasan pelanggan sudah meningkat</b>. Tapi masih belum sempurna, nodanya masih kelihatan di depan kasir." },
+        { type: "blue", tag: "🔵 Engaged", csat: 25,
+          text: "Langsung ambil pel dan bersihkan noda sebelum pelanggan datang.",
+          dialogue: "Pelanggan: “Wah, tokonya bersih dan wangi, jadi betah belanja di sini!”",
+          rationale: "Noda dibersihkan sebelum pelanggan datang, jadi toko sudah bersih dan nyaman sejak pelanggan masuk.",
+          ferdi: "Mantap, Bapak/Ibu {n}! Kamu memilih <b>Engaged</b>: Langsung bersihkan tanpa menunggu. Hasilnya, <b>kepuasan pelanggan meningkat</b> karena toko terlihat bersih dan rapih." }
       ]
     },
     {
       time: "10:00 WIB",
       title: "Stok Promo Kosong",
-      desc: "Promo sangat ramai. Display minyak goreng promo di lorong utama habis. Seorang Ibu mendatangi Bapak/Ibu dengan wajah kecewa.",
+      desc: "Promo lagi ramai, tapi rak minyak goreng promo sudah kosong. Seorang pelanggan menghampiri dengan wajah kecewa.",
       visual: V[2],
       options: [
-        {
-          type: "red", tag: "🔴 Disengaged",
-          text: "Mengangkat bahu dan menjawab singkat: 'Kalau di rak habis ya sudah ludes Bu, belum datang lagi barangnya.'",
-          csat: -10, morale: -10,
-          dialogue: "Ibu Pelanggan: 'Masa baru jam 10 sudah habis?! Bikin promosi kok nggak niat!'",
-          rationale: "Sikap defensif dan acuh merusak integritas promosi toko dan memicu komplain negatif dari pelanggan."
-        },
-        {
-          type: "yellow", tag: "🟡 Satisfied",
-          text: "Meminta maaf secara sopan bahwa display sedang kosong, dan menyarankan ibu tersebut untuk datang kembali di keesokan harinya.",
-          csat: 5, morale: 5,
-          dialogue: "Ibu Pembeli: 'Ya sudahlah... sayang sekali saya sudah jauh-jauh datang ke sini.'",
-          rationale: "Jawaban sopan dan sesuai kenyataan di lapangan, namun tidak memberikan solusi alternatif saat itu juga."
-        },
-        {
-          type: "blue", tag: "🔵 Engaged",
-          text: "Minta izin sejenak mengecek ketersediaan di gudang, dan sigap mengarahkan ke merek alternatif dengan kualitas setara yang juga sedang promosi jika stok benar-benar kosong.",
-          csat: 10, morale: 10,
-          dialogue: "Ibu Pembeli: 'Terima kasih ya sudah diperiksa ke gudang dan sudah memberikan rekomendasi alternatifnya!'",
-          rationale: "Upaya ekstra mencarikan jalan keluar menyelamatkan potensi penjualan dan mengobati kekecewaan konsumen."
-        }
-      ]
-    },
-    {
-      time: "12:30 WIB",
-      title: "Uang Koin Logam Menggunung",
-      desc: "Antrean panjang. Pelanggan di hadapan Bapak/Ibu mengeluarkan sekantong penuh koin logam receh untuk membayar belanjaan.",
-      visual: V[3],
-      options: [
-        {
-          type: "red", tag: "🔴 Disengaged",
-          text: "Menunjukkan mimik wajah agak kesal dan mulai menghitung koin satu demi satu dengan sangat lambat.",
-          csat: -10, morale: -10,
-          dialogue: "Pelanggan: 'Uang koin juga alat pembayaran yang sah kan?! Kalau diliatin gini, besok-besok saya nggak mau belanja di sini lagi deh.'",
-          rationale: "Mempermalukan pelanggan di depan antrean menciptakan trauma bagi pelanggan."
-        },
-        {
-          type: "yellow", tag: "🟡 Satisfied",
-          text: "Menerima koin dan menghitungnya secara tenang sesuai panduan verifikasi uang tunai hingga jumlahnya pas tanpa banyak bicara.",
-          csat: 5, morale: 5,
-          dialogue: "Pelanggan: 'Terima kasih sudah mau menghitung uang receh saya ya...' (agak segan pada antrean belakang).",
-          rationale: "Profesional dan taat aturan, namun suasana antrean di belakang menjadi agak tegang karena pelanggan lainnya menunggu cukup lama."
-        },
-        {
-          type: "blue", tag: "🔵 Engaged",
-          text: "Tersenyum ramah dan berkata 'Pas sekali kami butuh kembalian Bu', sambil memanggil rekan untuk membuka kasir sebelah.",
-          csat: 10, morale: 10,
-          dialogue: "Pelanggan: 'Lega sekali dilayani dengan sopan tanpa dihakimi, kasir sebelahnya juga langsung dibuka!'",
-          rationale: "Menunjukkan rasa hormat kepada pelanggan dan berkolaborasi untuk menjaga kepuasan pelanggan lainnya."
-        }
-      ]
-    },
-    {
-      time: "13:45 WIB",
-      title: "Selisih Harga di Rak dengan di Komputer",
-      desc: "Pelanggan komplain karena harga susu di rak tertulis Rp 79.000, tetapi saat di-scan di layar kasir tertera Rp 89.000.",
-      visual: V[4],
-      options: [
-        {
-          type: "red", tag: "🔴 Disengaged",
-          text: "Membantah pelanggan: 'Dari sistemnya begitu Bu. Kalau di komputer 89 ribu, ya berarti harganya segitu.'",
-          csat: -10, morale: -10,
-          dialogue: "Pelanggan: 'Ini namanya penipuan konsumen! Indomaret masa gitu?!'",
-          rationale: "Sikap arogan dalam menghadapi komplain memicu ketidakpuasan pelanggan."
-        },
-        {
-          type: "yellow", tag: "🟡 Satisfied",
-          text: "Menjelaskan aturan sistem bahwa tag harga mungkin belum diganti dan menawarkan opsi pembatalan item.",
-          csat: 5, morale: 5,
-          dialogue: "Pelanggan: 'Ya sudah saya cancel saja susunya, tolong dong lebih diperhatiin lagi tag harga di rak.'",
-          rationale: "Mengikuti batas regulasi sistem dengan tertib, namun membiarkan konsumen pulang dengan kecewa dan kehilangan potensi penjualan."
-        },
-        {
-          type: "blue", tag: "🔵 Engaged",
-          text: "Meminta maaf dengan tulus, menahan transaksi sejenak untuk berkoordinasi dengan pimpinan shift terkait harga barangnya.",
-          csat: 10, morale: 10,
-          dialogue: "Pelanggan: 'Terima kasih banyak atas tanggung jawab dan solusinya, pelayanan di sini jempolan!'",
-          rationale: "Melindungi kepercayaan pelanggan dengan mencoba untuk memverifikasi kembali harga barangnya."
-        }
-      ]
-    },
-    {
-      time: "15:00 WIB",
-      title: "Serah Terima Laci Kasir",
-      desc: "Saat laci kasir dihitung bersama rekan shift siang, terdapat selisih uang tunai minus Rp 5.000 dari laporan di sistem.",
-      visual: V[5],
-      options: [
-        {
-          type: "red", tag: "🔴 Disengaged",
-          text: "Langsung melempar uang Rp 5.000 dari kantong pribadi ke laci sambil menggerutu dan buru-buru absen pulang.",
-          csat: -10, morale: -10,
-          dialogue: "Rekan Kerja Shift Baru: 'Kalau ditambal asal-asalan begini, nanti pas audit kita berdua yang kena masalah.'",
-          rationale: "Menyelesaikan masalah secara sembrono merusak kepercayaan dan hubungan tim kerja."
-        },
-        {
-          type: "yellow", tag: "🟡 Satisfied",
-          text: "Mencatat selisih Rp 5.000 pada formulir berita acara serah terima laci kasir secara transparan sesuai SOP pembukuan harian toko.",
-          csat: 5, morale: 5,
-          dialogue: "Pimpinan Shift: 'Baik, selisih tercatat di sistem. Nanti kita jadikan catatan evaluasi berkala.'",
-          rationale: "Sangat taat asas kepatuhan administrasi dan menjaga kejujuran operasional."
-        },
-        {
-          type: "blue", tag: "🔵 Engaged",
-          text: "Meluangkan waktu bersama rekan kerja shift baru untuk meninjau kembali rincian transaksi hingga akar masalahnya ditemukan.",
-          csat: 10, morale: 10,
-          dialogue: "Rekan Shift Baru: 'Wah ternyata ada struk retur yang belum ke-input. Makasih banget udah mau bantu cek bareng.'",
-          rationale: "Usaha lebih untuk bertanggung jawab menyelesaikan masalah menumbuhkan tingkat kepercayaan dan hubungan di dalam tim kerja."
-        }
+        { type: "red", tag: "🔴 Disengaged", csat: -10,
+          text: "Angkat bahu dan jawab singkat: “Habis ya Pak, sudah ludes.”",
+          dialogue: "Bapak: “Baru jam 10 sudah habis? Promo kok nggak niat gini!”",
+          ferdi: "Ini pilihan <b>Disengaged</b>. Jawaban yang acuh bikin pelanggan makin kecewa. Perbuatan seperti ini bisa bikin <b>kepuasan pelanggan menurun</b>." },
+        { type: "yellow", tag: "🟡 Satisfied", csat: 10,
+          text: "Minta maaf dengan sopan, lalu sarankan Bapaknya datang lagi besok atau mengunjungi toko Indomaret lainnya yang terdekat.",
+          dialogue: "Bapak: “Yahh... semoga ada ya barangnya di toko itu, kalau nggak saya balik lagi aja deh besok.”",
+          ferdi: "Ini pilihan <b>Satisfied</b>. Sudah benar, sopan dan jujur, jadi <b>kepuasan pelanggan sudah meningkat</b>. Tapi masih belum sempurna, karena belum ada solusi alternatif untuk pelanggan." },
+        { type: "blue", tag: "🔵 Engaged", csat: 25,
+          text: "Cek ke gudang dulu, lalu tawarkan merek lain yang setara dan juga sedang promo.",
+          dialogue: "Bapak: “Makasih ya, sudah dicek ke gudang dan dibantu carikan!”",
+          rationale: "Mengecek gudang dan menawarkan merek setara yang juga promo membuat ibu tetap pulang membawa solusi, bukan kekecewaan.",
+          ferdi: "Keren, Bapak/Ibu {n}! Kamu memilih <b>Engaged</b>: Cek gudang sambil menawarkan alternatif. <b>Kepuasan pelanggan meningkat</b> karena kebutuhannya terpenuhi saat itu juga." }
       ]
     },
     {
       time: "16:30 WIB",
       title: "Kakek Mencari Minyak Angin",
-      desc: "Seorang kakek tampak bingung mondar-mandir di lorong. Beliau bertanya di mana letak minyak angin.",
+      desc: "Seorang kakek terlihat bingung mondar-mandir di lorong. Beliau menanyakan letak minyak angin.",
       visual: V[6],
       options: [
-        {
-          type: "red", tag: "🔴 Disengaged",
-          text: "Menjawab tanpa memandang wajahnya sambil terus mengetik: 'Lorong obat di belakang sana kek.'",
-          csat: -10, morale: -10,
-          dialogue: "Kakek: 'Aduh di mana ya obatnya... mata kakek sudah agak kabur, jadi nggak keliatan kalau harus melihat tulisan kecil-kecil.'",
-          rationale: "Kurang empati pada konsumen seringkali membuat pelanggan merasa diabaikan."
-        },
-        {
-          type: "yellow", tag: "🟡 Satisfied",
-          text: "Memberikan panduan arah yang sangat detail dari balik konter: 'Di Lorong 3 sebelah kiri, rak nomor 2 dari bawah ya Kek.'",
-          csat: 5, morale: 5,
-          dialogue: "Kakek: 'Oh Lorong 3 ya... baik, kakek coba cari pelan-pelan ke sana.'",
-          rationale: "Instruksi yang diberikan sudah akurat dan santun, namun pelanggan lansia rentan masih perlu dibantu secara langsung."
-        },
-        {
-          type: "blue", tag: "🔵 Engaged",
-          text: "Meminta izin rekan keluar konter sejenak, mengantarkan kakek ke rak, dan membantunya memilih ukuran botol yang sesuai.",
-          csat: 10, morale: 10,
-          dialogue: "Kakek: 'Terima kasih banyak, baik sekali kamu mau menuntun kakek langsung.'",
-          rationale: "Pelayanan dari hati menghadirkan kehangatan nyata yang melebihi standar baku."
-        }
+        { type: "red", tag: "🔴 Disengaged", csat: -10,
+          text: "Jawab sambil tetap mengetik: “Di lorong obat sana, Kek.”",
+          dialogue: "Kakek: “Aduh, di mana ya… mata Kakek sudah kabur, tulisannya nggak kelihatan.”",
+          ferdi: "Ini pilihan <b>Disengaged</b>. Menjawab dengan cuek bikin Kakek merasa diabaikan. Perbuatan seperti ini bisa bikin <b>kepuasan pelanggan menurun</b>." },
+        { type: "yellow", tag: "🟡 Satisfied", csat: 10,
+          text: "Beri arah detail dari balik kasir: “Di lorong ketiga dari kasir, rak nomor 2 dari bawah ya, Kek.”",
+          dialogue: "Kakek: “Oh, Lorong 3 ya… Kalau gitu, Kakek coba cari pelan-pelan.”",
+          ferdi: "Ini pilihan <b>Satisfied</b>. Arahannya jelas dan sopan, jadi <b>kepuasan pelanggan sudah meningkat</b>. Tapi masih belum sempurna, Kakek merasa masih perlu dibantu secara langsung." },
+        { type: "blue", tag: "🔵 Engaged", csat: 25,
+          text: "Izin ke rekan kerja, lalu antar Kakek langsung ke rak dan bantu ambilkan botolnya.",
+          dialogue: "Kakek: “Terima kasih ya sudah mau membantu Kakek mengambil minyak anginnya.”",
+          rationale: "Mengantar langsung ke rak dan membantu mengambilkan botol membuat Kakek merasa dihargai dan tidak perlu mencari sendiri.",
+          ferdi: "Hebat, Bapak/Ibu {n}! Kamu memilih <b>Engaged</b>: Mengantar Kakek langsung ke rak. <b>Kepuasan pelanggan meningkat</b> karena sudah dibantu secara langsung." }
       ]
     },
     {
       time: "18:00 WIB",
       title: "Es Krim Jatuh",
-      desc: "Balita menangis histeris karena es krimnya jatuh mengotori lantai lorong. Sang ibu panik dan merasa bersalah.",
+      desc: "Balita menangis histeris karena es krimnya jatuh mengotori lantai lorong. Sang Ibu panik dan merasa bersalah.",
       visual: V[7],
       options: [
-        {
-          type: "red", tag: "🔴 Disengaged",
-          text: "Menatap sinis dari kejauhan dan berbisik ke rekan kerja tentang orang tua yang tidak bisa mengawasi anaknya.",
-          csat: -10, morale: -10,
-          dialogue: "Ibu Pelanggan: 'Bukannya dibantuin, malah diliatin doang... padahal ini kan musibah.'",
-          rationale: "Sikap menghakimi menciptakan trauma emosional bagi pengunjung."
-        },
-        {
-          type: "yellow", tag: "🟡 Satisfied",
+        { type: "red", tag: "🔴 Disengaged", csat: -10,
+          text: "Menatap sinis dari kejauhan sambil menggelengkan kepala dan berbisik ke rekan kerja tentang Ibu tersebut.",
+          dialogue: "Ibu Pelanggan: 'Bukannya dibantuin, malah diliatin doang... Indomaret masa gitu.'",
+          rationale: "Sikap menghakimi dan cuek menciptakan rasa kecewa bagi pengunjung.",
+          ferdi: "Ini pilihan <b>Disengaged</b>. Menatap sinis dan berbisik bikin Ibunya makin tertekan. Perbuatan seperti ini bisa bikin <b>kepuasan pelanggan menurun</b>." },
+        { type: "yellow", tag: "🟡 Satisfied", csat: 10,
           text: "Dengan sigap membantu membersihkan lantai lorong dari es krim yang jatuh.",
-          csat: 5, morale: 5,
           dialogue: "Ibu Pelanggan: 'Maaf ya, lantainya jadi kotor karena es krim anak saya...'",
-          rationale: "Mengamankan area dari bahaya terpeleset."
-        },
-        {
-          type: "blue", tag: "🔵 Engaged",
-          text: "Menghampiri sambil tersenyum dan berkata 'Tidak apa-apa Ibu, jangan cemas', kemudian sigap bantu membersihkan lantai dan menghibur si anak.",
-          csat: 10, morale: 10,
+          rationale: "Mengamankan area dari tumpahan es krim, sehingga mencegah risiko terpeleset.",
+          ferdi: "Ini pilihan <b>Satisfied</b>. Sudah benar, lantai aman dan <b>kepuasan pelanggan sudah meningkat</b>. Tapi masih belum sempurna, Ibunya masih merasa bersalah dan anaknya masih menangis." },
+        { type: "blue", tag: "🔵 Engaged", csat: 25,
+          text: "Menghampiri sambil tersenyum dan berkata 'Tidak apa-apa Bu, tenang saja, nanti kami bersihkan.', kemudian sigap bantu membersihkan lantai dan menghibur si anak.",
           dialogue: "Ibu Pelanggan: 'Ya ampun ramah sekali... tangisan anak saya juga langsung reda. Terima kasih banyak ya!'",
-          rationale: "Empati kemanusiaan mengubah situasi krisis menjadi momen loyalitas yang kuat."
-        }
-      ]
-    },
-    {
-      time: "19:30 WIB",
-      title: "Pelanggan Mengalami Kendala Sinyal saat Bayar Menggunakan QRIS",
-      desc: "Pelanggan memilih metode pembayaran QRIS, namun saat membuka aplikasi m-banking, sinyal hp pelanggan tersebut tiba-tiba hilang sehingga transaksi tertunda.",
-      visual: V[8],
-      options: [
-        {
-          type: "red", tag: "🔴 Disengaged",
-          text: "Berkata ketus: 'Kalau sinyalnya susah, dibatalin dulu aja ya, kasihan yang di belakang nunggunya jadi lama.'",
-          csat: -10, morale: -10,
-          dialogue: "Pelanggan: 'Masa langsung dibatalkan?! Capek-capek saya milih barang setengah jam di dalam!'",
-          rationale: "Menghilangkan potensi penjualan dan memicu kemarahan akibat tidak adanya inisiatif."
-        },
-        {
-          type: "yellow", tag: "🟡 Satisfied",
-          text: "Mempersilakan pelanggan untuk mencari sinyal dan menunggu dengan sabar hingga aplikasi m-banking pelanggan berhasil tersambung.",
-          csat: 5, morale: 5,
-          dialogue: "Pelanggan: 'Aduh, maaf ya jadi lama, susah banget soalnya sinyal di dalam toko ini.'",
-          rationale: "Sudah menunjukkan sikap sabar dan toleran sesuai standar pelayanan, namun membiarkan antrean jadi terhambat."
-        },
-        {
-          type: "blue", tag: "🔵 Engaged",
-          text: "Menyampaikan maaf atas kendala sinyal di area toko dan berinisiatif menawarkan koneksi internet dari hp pribadinya agar transaksi pelanggan segera berhasil",
-          csat: 10, morale: 10,
-          dialogue: "Pelanggan: 'Wah, terima kasih banyak udah mau kasih saya koneksi internet dari hp nya! Untung banget, kalau nggak bisa batal nih belanjaan saya.'",
-          rationale: "Kerelaan memberikan solusi di luar fasilitas standar demi kepuasan pelanggan adalah bentuk pengorbanan kecil yang berdampak besar."
-        }
+          rationale: "Rasa empati mengubah situasi krisis menjadi kesempatan untuk membangun loyalitas pelanggan.",
+          ferdi: "Luar biasa, Bapak/Ibu {n}! Kamu memilih <b>Engaged</b>: Menenangkan Ibunya, membersihkan lantai, sekaligus menghibur si anak. <b>Kepuasan pelanggan meningkat</b> karena sudah dibantu dan ditenangkan." }
       ]
     },
     {
       time: "21:45 WIB",
       title: "Dompet Pelanggan Tertinggal Menjelang Tutup Toko",
-      desc: "Saat sedang mengelap meja kasir untuk persiapan tutup toko, Bapak/Ibu menemukan sebuah dompet tertinggal. Bapak/Ibu ingat betul itu milik seorang langganan yang baru saja berjalan keluar menuju area parkir.",
+      desc: "Saat sedang mengelap meja kasir untuk persiapan tutup toko, Bapak/Ibu menemukan sebuah dompet tertinggal. Bapak/Ibu ingat betul itu milik seorang pelanggan yang baru saja berjalan keluar menuju area parkir.",
       visual: V[9],
       options: [
-        {
-          type: "red", tag: "🔴 Disengaged",
-          text: "Memasukkan dompet ke laci bawah kasir begitu saja. Biar besok saja diurus kalau ibunya sadar dan datang mencari ke toko.",
-          csat: -10, morale: -10,
+        { type: "red", tag: "🔴 Disengaged", csat: -10,
+          text: "Memasukkan dompet ke laci bawah kasir begitu saja. Biar besok saja diurus kalau pelanggannya sadar dan datang mencari ke toko.",
           dialogue: "Pelanggan (keesokan harinya): 'Aduh, semalam saya panik banget nyariin dompet... kok saya nggak dipanggil sih pas saya masih di depan pintu?'",
-          rationale: "Sikap pasif dan kurangnya kepedulian membuat pelanggan mengalami kepanikan semalaman yang sebenarnya bisa dicegah."
-        },
-        {
-          type: "yellow", tag: "🟡 Satisfied",
+          rationale: "Sikap pasif dan kurangnya kepedulian membuat pelanggan mengalami kepanikan semalaman yang sebenarnya bisa dicegah.",
+          ferdi: "Ini pilihan <b>Disengaged</b>. Dompet disimpan begitu saja, padahal pelanggannya masih terlihat. Perbuatan seperti ini bisa bikin <b>kepuasan pelanggan menurun</b>." },
+        { type: "yellow", tag: "🟡 Satisfied", csat: 10,
           text: "Mengamankan dompet tersebut dan menyerahkannya kepada Pimpinan Shift beberapa menit kemudian untuk disimpan.",
-          csat: 5, morale: 5,
-          dialogue: "Pimpinan Shift: 'Oke, sudah saya catat di buku serah terima barang tertinggal. Besok kalau ibunya datang, arahkan ke saya ya.'",
-          rationale: "Bapak/Ibu telah menjalankan SOP pengamanan barang temuan dengan sangat tertib, meskipun pelanggan tetap akan pulang dalam keadaan gelisah."
-        },
-        {
-          type: "blue", tag: "🔵 Engaged",
+          dialogue: "Pimpinan Shift: 'Oke, sudah saya catat di buku serah terima barang tertinggal. Besok kalau pelanggannya datang, arahkan ke saya ya.'",
+          rationale: "Bapak/Ibu telah menjalankan SOP pengamanan barang temuan dengan sangat tertib, meskipun pelanggan tetap akan pulang dalam keadaan gelisah.",
+          ferdi: "Ini pilihan <b>Satisfied</b>. Sudah sesuai SOP barang temuan, jadi <b>kepuasan pelanggan sudah meningkat</b>. Tapi masih belum sempurna, pelanggannya tetap pulang dalam keadaan gelisah." },
+        { type: "blue", tag: "🔵 Engaged", csat: 25,
           text: "Meninggalkan meja kasir sebentar, bergegas berlari ke area parkir mengejar pelanggan tersebut untuk mengembalikan dompetnya secara langsung.",
-          csat: 10, morale: 10,
           dialogue: "Pelanggan: 'Ya ampun! Saya sama sekali nggak sadar... Terima kasih banyak ya, saya sampe dikejar-kejar begini!'",
-          rationale: "Inisiatif berlari mengejar pelanggan ke parkiran memberikan kelegaan instan dan menciptakan rasa kepuasan pelanggan yang kuat."
-        }
+          rationale: "Inisiatif berlari mengejar pelanggan ke parkiran memberikan kelegaan instan dan menciptakan rasa kepuasan pelanggan yang kuat.",
+          ferdi: "Keren, Bapak/Ibu {n}! Kamu memilih <b>Engaged</b>: Langsung mengejar pelanggan ke parkiran. <b>Kepuasan pelanggan meningkat</b> karena dihindarkan dari rasa cemas dan ketidakpastian." }
       ]
     }
+
   ];
 
+  const CSAT_START = 20;
   let currentWave = 0;
-  let csat = 20;
-  let morale = 20;
+  let csat = CSAT_START;
   let history = [];
   let currentOptions = [];
   let pendingChoice = null;
@@ -882,22 +881,54 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-o
     return shuff;
   }
 
+  /* ===== Efek "Pak Ferdi sedang bicara": teks muncul huruf demi huruf + badan bergoyang ===== */
+  let typeTimer = null, typeDelay = null;
+  function prepType(el, html) {
+    const tpl = document.createElement('template');
+    tpl.innerHTML = html;
+    const walk = n => [...n.childNodes].forEach(c => {
+      if (c.nodeType === 3) {
+        const f = document.createDocumentFragment();
+        [...c.textContent].forEach(ch => { const s = document.createElement('span'); s.className = 'ch'; s.textContent = ch; f.appendChild(s); });
+        c.replaceWith(f);
+      } else walk(c);
+    });
+    walk(tpl.content);
+    el.innerHTML = '';
+    el.appendChild(tpl.content);
+  }
+  function stopTyping() {
+    clearInterval(typeTimer); clearTimeout(typeDelay); typeTimer = typeDelay = null;
+    document.querySelectorAll('.ferdi.talking').forEach(f => f.classList.remove('talking'));
+  }
+  function typeInto(el, html, ferdiEl, delay) {
+    stopTyping();
+    prepType(el, html);
+    const chars = el.querySelectorAll('.ch');
+    let i = 0;
+    const finish = () => { chars.forEach(c => c.classList.add('on')); clearInterval(typeTimer); typeTimer = null; if (ferdiEl) ferdiEl.classList.remove('talking'); };
+    el._skip = finish;
+    if (REDUCED) { finish(); return; }
+    typeDelay = setTimeout(() => {
+      if (ferdiEl) ferdiEl.classList.add('talking');
+      typeTimer = setInterval(() => { if (i >= chars.length) { finish(); return; } chars[i++].classList.add('on'); }, 24);
+    }, delay || 0);
+  }
+  document.addEventListener('click', e => {
+    const b = e.target.closest && e.target.closest('.bubble');
+    const s = b && b.querySelector('.said');
+    if (s && s._skip) { clearTimeout(typeDelay); s._skip(); }
+  });
+  function replayEnter(fw) { if (!fw) return; fw.style.animation = 'none'; void fw.offsetWidth; fw.style.animation = ''; }
+
   function updateDashboard() {
     csat = Math.max(0, Math.min(100, csat));
-    morale = Math.max(0, Math.min(100, morale));
-
     document.getElementById('csatScore').innerText = csat + '%';
-    document.getElementById('moraleScore').innerText = morale + '%';
-    
-    const csatBar = document.getElementById('csatBar');
-    const moraleBar = document.getElementById('moraleBar');
-    
-    [[csatBar,csat],[moraleBar,morale]].forEach(([bar,v])=>{
-      const on = Math.round(v/10);
-      bar.querySelectorAll('i').forEach((s,i)=>s.classList.toggle('on', i < on));
-      bar.style.setProperty('--hc', v >= 70 ? 'var(--good)' : (v >= 50 ? 'var(--warn)' : 'var(--red)'));
-      bar.classList.toggle('low', v < 30);
-    });
+    const bar = document.getElementById('csatBar');
+    const on = Math.round(csat / 10);
+    bar.querySelectorAll('i').forEach((s, i) => s.classList.toggle('on', i < on));
+    bar.style.setProperty('--hc', csat >= 70 ? 'var(--good)' : (csat >= 50 ? 'var(--warn)' : 'var(--red)'));
+    bar.classList.toggle('low', csat < 30);
   }
 
   function renderScene() {
@@ -905,174 +936,140 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-o
     area.innerHTML = '';
     area.scrollTop = 0;
 
-    if (currentWave >= rawScenarios.length) {
-      renderDebrief();
-      return;
-    }
+    if (currentWave >= rawScenarios.length) { renderDebrief(); return; }
 
     const scene = rawScenarios[currentWave];
     currentOptions = shuffleArray(scene.options);
+    startTrack('s' + currentWave);
 
-    const letterBullets = ['A', 'B', 'C'];
-
-    let optionsHtml = currentOptions.map((opt, idx) => `
+    const letters = ['A', 'B', 'C'];
+    const optionsHtml = currentOptions.map((opt, idx) => `
       <button class="btn-choice" onclick="selectChoice(${idx})">
-        <div class="choice-bullet">${letterBullets[idx]}</div>
+        <div class="choice-bullet">${letters[idx]}</div>
         <div class="choice-text">${opt.text}</div>
-      </button>
-    `).join('');
+      </button>`).join('');
 
     area.innerHTML = `
       <div class="scene-card">
         <div class="scene-head"><span class="wave-badge">Skenario ${currentWave + 1}/${rawScenarios.length}</span><span class="scene-time">🕒 ${scene.time}</span></div>
+        ${scene.visual}
         <div class="scene-title">${scene.title}</div>
         <div class="scene-desc">${scene.desc}</div>
-        ${scene.visual}
       </div>
-      <div class="choice-prompt">Apa yang akan kamu lakukan, Bapak/Ibu ${cashierName}?</div>
-      <div class="choices-wrapper">
-        ${optionsHtml}
-      </div>
-    `;
+      <div class="choices-wrapper">${optionsHtml}</div>`;
     wrapFit(area);
     updateDashboard();
   }
 
   function selectChoice(index) {
+    if (pendingChoice) return;
     pendingChoice = currentOptions[index];
-    playEffect(pendingChoice.type);
+    startTrack(pendingChoice.type);
     showFeedbackModal(pendingChoice);
   }
 
   function showFeedbackModal(choice) {
     const modal = document.getElementById('feedbackModal');
-    const revealedTag = document.getElementById('revealedTag');
-    const deltaBadges = document.getElementById('deltaBadges');
-    
-    revealedTag.className = `revealed-tag tag-${choice.type}`;
-    revealedTag.innerText = choice.tag;
+    const tag = document.getElementById('revealedTag');
+    tag.className = `revealed-tag tag-${choice.type}`;
+    tag.innerText = choice.tag;
 
-    const formatDelta = (val, label) => {
-      const cls = val > 0 ? 'delta-pos' : (val === 0 ? 'delta-zero' : 'delta-neg');
-      const sign = val > 0 ? `+${val}` : `${val}`;
-      return `<span class="delta-badge ${cls}">${label} ${sign}%</span>`;
-    };
-
-    deltaBadges.innerHTML = `
-      ${formatDelta(choice.csat, 'Kepuasan')}
-      ${formatDelta(choice.morale, 'Moral')}
-    `;
-
+    const cls = choice.csat > 0 ? 'delta-pos' : (choice.csat === 0 ? 'delta-zero' : 'delta-neg');
+    document.getElementById('deltaBadges').innerHTML = `<span class="delta-badge ${cls}">❤️ Kepuasan ${choice.csat > 0 ? '+' : ''}${choice.csat}%</span>`;
     document.getElementById('dialogueText').innerText = choice.dialogue;
-    document.getElementById('rationaleText').innerText = choice.rationale;
-    
+    document.getElementById('fBubble').className = `bubble t-${choice.type}`;
+    const eng = rawScenarios[currentWave].options.find(o => o.type === 'blue');
+    const showEng = choice.type !== 'blue' && eng;
+    document.getElementById('engCard').classList.toggle('show', !!showEng);
+    document.getElementById('fWrap').parentNode.style.setProperty('--fh', showEng ? '150px' : '235px');
+    if (showEng) {
+      document.getElementById('engText').innerText = eng.text;
+      document.getElementById('engDlg').innerText = eng.dialogue;
+      document.getElementById('engWhy').innerHTML = '<b>Kenapa Engaged?</b> ' + eng.rationale;
+    }
+    document.getElementById('nextBtn').innerText = currentWave + 1 >= rawScenarios.length ? 'Lihat hasil akhir →' : 'Lanjut ke skenario berikutnya';
+
     modal.classList.add('show');
+    replayEnter(document.getElementById('fWrap'));
+    typeInto(document.getElementById('ferdiText'), choice.ferdi.replace('{n}', esc(cashierName)), document.getElementById('fFerdi'), 450);
     fitBox(modal.querySelector('.modal-dialogue-card'), modal.querySelector('.mfit'));
   }
 
   function nextWave() {
+    stopTyping();
     document.getElementById('feedbackModal').classList.remove('show');
-
     if (pendingChoice) {
       csat += pendingChoice.csat;
-      morale += pendingChoice.morale;
-
-      history.push({
-        wave: currentWave + 1,
-        type: pendingChoice.type,
-      });
+      history.push({ wave: currentWave + 1, type: pendingChoice.type });
       pendingChoice = null;
     }
-
     currentWave++;
     renderScene();
   }
 
+  const CLOSING = "Employee Engagement itu bikin kita <b>lebih terhubung</b> dengan pekerjaan. Kalau sudah terhubung, <b>usaha lebih</b> akan muncul dengan sendirinya, dan <b>kepuasan pelanggan</b> pun ikut meningkat.";
+
   function renderDebrief() {
     document.getElementById('app').classList.add('debrief');
+    startTrack('debrief');
     const area = document.getElementById('gameArea');
-    
+    const n = esc(cashierName);
+
     const blue = history.filter(h => h.type === 'blue').length;
     const yellow = history.filter(h => h.type === 'yellow').length;
     const red = history.filter(h => h.type === 'red').length;
 
-    let dominantProfile = "DISENGAGED";
-    let dominantClass = "tag-red";
-    let dominantDesc = `Bapak/Ibu ${cashierName} cenderung bersikap pasif. Hal ini menyebabkan kepuasan pelanggan merosot drastis dan beban moral tim menjadi negatif karena sikap apatis terhadap masalah.`;
-
-    if (blue >= yellow && blue >= red) {
-      dominantProfile = "ENGAGED";
-      dominantClass = "tag-blue";
-      dominantDesc = `Luar biasa, Bapak/Ibu ${cashierName}! menunjukkan sifat kepemilikan terhadap pekerjaan yang baik. Melalui upaya ekstra (Discretionary Effort), hubungan dengan tim kerja dan kepuasan pelanggan meningkat.`;
-    } else if (yellow >= blue && yellow >= red) {
-      dominantProfile = "SATISFIED";
-      dominantClass = "tag-yellow";
-      dominantDesc = `Konsisten dan patuh aturan! Operasional shift berjalan aman di tangan Bapak/Ibu ${cashierName}. Namun, masih terbatas SOP baku. Ingat, pelanggan mengingat sentuhan empati ekstra.`;
+    let prof = "SATISFIED", cls = "tag-yellow";
+    let desc = `Sudah rapi dan sesuai aturan, Bapak/Ibu ${n}! Tinggal tambah sentuhan ekstra biar pelanggan makin puas.`;
+    if (blue >= 3) {
+      prof = "ENGAGED"; cls = "tag-blue";
+      desc = `Keren, Bapak/Ibu ${n}! Kamu memberi usaha ekstra, jadi pelanggan pulang makin puas.`;
+    } else if (red >= 3) {
+      prof = "DISENGAGED"; cls = "tag-red";
+      desc = `Bapak/Ibu ${n} cenderung pasif nih, jadi kepuasan pelanggan menurun. Yuk, coba lagi dengan lebih peduli!`;
     }
 
     area.innerHTML = `
-      <div class="dgrid"><div class="summary-card">
-        <h2>Hasil shift, ${cashierName}</h2>
-        <div class="revealed-tag ${dominantClass}" >Profil dominan: ${dominantProfile}</div>
-        <p class="dom-desc">${dominantDesc}</p>
-
-        <div class="recap-grid">
-          <div class="recap-box" style="background: var(--blue-light);">
-            <div class="count">${blue}</div>
-            <div class="label">Engaged</div>
+      <div class="dgrid">
+        <div class="summary-card">
+          <h2>Hasil shift, ${n}</h2>
+          <div class="revealed-tag ${cls}">Profil dominan: ${prof}</div>
+          <p class="dom-desc">${desc}</p>
+          <div class="recap-grid">
+            <div class="recap-box" style="background: var(--blue-light);"><div class="count">${blue}</div><div class="label">Engaged</div></div>
+            <div class="recap-box" style="background: var(--yellow-light);"><div class="count">${yellow}</div><div class="label">Satisfied</div></div>
+            <div class="recap-box" style="background: var(--red-light);"><div class="count">${red}</div><div class="label">Disengaged</div></div>
           </div>
-          <div class="recap-box" style="background: var(--yellow-light);">
-            <div class="count">${yellow}</div>
-            <div class="label">Satisfied</div>
-          </div>
-          <div class="recap-box" style="background: var(--red-light);">
-            <div class="count">${red}</div>
-            <div class="label">Disengaged</div>
-          </div>
+          <div class="score-row"><div>❤️ Kepuasan pelanggan akhir: <b>${csat}%</b></div></div>
         </div>
-
-        <div class="score-row">
-          <div>Kepuasan pelanggan: <b>${csat}%</b></div>
-          <div>Moral tim: <b>${morale}%</b></div>
+        <div class="closing">
+          <div class="talk" style="--fh:215px;--tt:42px">
+            <div class="fwrap"><div class="ferdi" id="cFerdi"></div></div>
+            <div class="bubble t-blue"><span class="who">Pak Ferdi</span><p class="said" id="closingText"></p></div>
+          </div>
         </div>
       </div>
-
-      <div class="theory-section">
-        <h3 class="theory-title">Employee Engagement itu bukan cuma hadir secara fisik saja, tetapi pikiran kita juga harus ikut bekerja dan peduli dengan hasil pekerjaan kita.” </h3>
-        <div class="theory-item" style="border-left-color: #8b5cf6;">
-          <strong>Meaningfulness</strong>
-          <p>Perasaan bahwa pekerjaan yang dilakukan itu bermakna dan memiliki dampak bagi orang lain serta perusahaan.</p>
-        </div>
-        <div class="theory-item" style="border-left-color: #10b981;">
-          <strong>Psychological Safety</strong>
-          <p>Iklim kerja saling peduli, seluruh anggota tim berani untuk mencari solusi bersama tanpa rasa takut disalahkan.</p>
-        </div>
-        <div class="theory-item" style="border-left-color: #f59e0b;">
-          <strong>Availability</strong>
-          <p>Kesiapan kognitif dan emosional anggota tim untuk sigap merespon kendala tak terduga, alih-alih pasrah pada situasi.</p>
-        </div>
-      </div>
-
-      </div><button class="btn-restart" onclick="restartGame()">
-        Ulang Gamifikasi
-      </button>
-    `;
+      <button class="btn-restart" onclick="restartGame()">Ulangi Gamifikasi</button>`;
     wrapFit(area);
     updateDashboard();
+    typeInto(document.getElementById('closingText'), CLOSING.replace('{n}', n), document.getElementById('cFerdi'), 500);
     notifyLMS();
   }
 
   function restartGame() {
+    stopTyping();
+    stopMusic(); currentKey = null;
     currentWave = 0;
-    csat = 20;
-    morale = 20;
+    csat = CSAT_START;
     history = [];
+    pendingChoice = null;
     document.getElementById('clockInScreen').classList.add('show');
     document.getElementById('briefingScreen').classList.remove('show');
     document.getElementById('guideScreen').classList.remove('show');
+    document.getElementById('feedbackModal').classList.remove('show');
     document.getElementById('app').classList.remove('playing', 'debrief');
     document.getElementById('gameArea').innerHTML = '';
-    csat = 20; morale = 20; updateDashboard();
+    updateDashboard();
     document.getElementById('cashierNameInput').value = '';
     updateLiveTimestamp();
     fitAll();
