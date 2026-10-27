@@ -867,7 +867,7 @@ function notifyLMS() {
     {
       time: "07:00 WIB",
       title: "Buka Toko &amp; Terdapat Noda di Lantai Depan Kasir",
-      desc: "Shift pagi baru mulai. Ada jejak sepatu kotor dan cipratan lumpur di lantai depan kasir, sisa shift semalam.",
+      desc: "Shift pagi baru dimulai. Ada jejak sepatu kotor dan cipratan lumpur di lantai depan kasir dari sisa shift semalam.",
       visual: V[0],
       options: [
         { type: "red", tag: "🔴 Disengaged", csat: 0,
@@ -892,7 +892,7 @@ function notifyLMS() {
       visual: V[2],
       options: [
         { type: "red", tag: "🔴 Disengaged", csat: 0,
-          text: "Angkat bahu dan jawab singkat: “Habis ya, Bapak. Sudah ludes.”",
+          text: "Angkat bahu dan jawab singkat: “Sudah habis, Pak. Ludes.”",
           dialogue: "Bapak: “Baru jam 10 sudah habis? Promo kok nggak niat gini!”",
           ferdi: "Ini pilihan <b>Disengaged</b>. Jawaban yang acuh bikin pelanggan makin kecewa. Perbuatan seperti ini bisa bikin <b>kepuasan pelanggan menurun</b>." },
         { type: "yellow", tag: "🟡 Satisfied", csat: 15,
@@ -902,14 +902,14 @@ function notifyLMS() {
         { type: "blue", tag: "🔵 Engaged", csat: 20,
           text: "Cek ke gudang dulu, lalu tawarkan merek lain yang setara dan juga sedang promo.",
           dialogue: "Bapak: “Makasih ya, sudah dicek ke gudang dan dibantu carikan!”",
-          rationale: "Mengecek gudang dan menawarkan merek setara yang juga promo membuat ibu tetap pulang membawa solusi, bukan kekecewaan.",
+          rationale: "Mengecek gudang dan menawarkan merek setara yang juga promo membuat pelanggan tetap pulang membawa solusi, bukan kekecewaan.",
           ferdi: "Keren, {s} {n}! Kamu memilih <b>Engaged</b>: Cek gudang sambil menawarkan alternatif. <b>Kepuasan pelanggan meningkat</b> karena kebutuhannya terpenuhi saat itu juga." }
       ]
     },
     {
       time: "16:30 WIB",
       title: "Kakek Mencari Minyak Angin",
-      desc: "Seorang kakek terlihat bingung mondar-mandir di lorong. Beliau menanyakan letak minyak angin.",
+      desc: "Seorang kakek terlihat bingung di lorong, kemudian menghampiri dan bertanya letak minyak angin.",
       visual: V[6],
       options: [
         { type: "red", tag: "🔴 Disengaged", csat: 0,
@@ -917,11 +917,11 @@ function notifyLMS() {
           dialogue: "Kakek: “Aduh, di mana ya… mata Kakek sudah kabur, tulisannya nggak kelihatan.”",
           ferdi: "Ini pilihan <b>Disengaged</b>. Menjawab dengan cuek bikin Kakek merasa diabaikan. Perbuatan seperti ini bisa bikin <b>kepuasan pelanggan menurun</b>." },
         { type: "yellow", tag: "🟡 Satisfied", csat: 15,
-          text: "Beri arah detail dari balik kasir: “Di lorong ketiga dari kasir, rak nomor 2 dari bawah ya, Kek.”",
-          dialogue: "Kakek: “Oh, Lorong 3 ya… Kalau gitu, Kakek coba cari pelan-pelan.”",
+          text: "Beri arah detail dari balik kasir: “Di lorong ketiga dari kasir, ada di rak paling atas ya, Kek.”",
+          dialogue: "Kakek: “Oh, Lorong tiga ya… Kalau gitu, Kakek coba cari pelan-pelan.”",
           ferdi: "Ini pilihan <b>Satisfied</b>. Arahannya jelas dan sopan, jadi <b>kepuasan pelanggan sudah meningkat</b>. Tapi masih belum sempurna, Kakek merasa masih perlu dibantu secara langsung." },
         { type: "blue", tag: "🔵 Engaged", csat: 20,
-          text: "Izin ke rekan kerja, lalu antar Kakek langsung ke rak dan bantu ambilkan botolnya.",
+          text: "Izin ke rekan kerja, lalu antar Kakek langsung ke rak dan bantu ambilkan minyak anginnya.",
           dialogue: "Kakek: “Terima kasih ya sudah mau membantu Kakek mengambil minyak anginnya.”",
           rationale: "Mengantar langsung ke rak dan membantu mengambilkan botol membuat Kakek merasa dihargai dan tidak perlu mencari sendiri.",
           ferdi: "Hebat, {s} {n}! Kamu memilih <b>Engaged</b>: Mengantar Kakek langsung ke rak. <b>Kepuasan pelanggan meningkat</b> karena sudah dibantu secara langsung." }
@@ -937,14 +937,14 @@ function notifyLMS() {
           text: "Menatap sinis dari kejauhan sambil menggelengkan kepala dan berbisik ke rekan kerja tentang Ibu tersebut.",
           dialogue: "Ibu Pelanggan: 'Bukannya dibantuin, malah diliatin doang... Indomaret masa gitu.'",
           rationale: "Sikap menghakimi dan cuek menciptakan rasa kecewa bagi pengunjung.",
-          ferdi: "Ini pilihan <b>Disengaged</b>. Menatap sinis dan berbisik bikin Ibunya makin tertekan. Perbuatan seperti ini bisa bikin <b>kepuasan pelanggan menurun</b>." },
+          ferdi: "Ini pilihan <b>Disengaged</b>. Menatap sinis dan berbisik bikin Ibunya makin panik. Perbuatan seperti ini bisa bikin <b>kepuasan pelanggan menurun</b>." },
         { type: "yellow", tag: "🟡 Satisfied", csat: 15,
           text: "Dengan sigap membantu membersihkan lantai lorong dari es krim yang jatuh.",
           dialogue: "Ibu Pelanggan: 'Maaf ya, lantainya jadi kotor karena es krim anak saya...'",
           rationale: "Mengamankan area dari tumpahan es krim, sehingga mencegah risiko terpeleset.",
           ferdi: "Ini pilihan <b>Satisfied</b>. Sudah benar, lantai aman dan <b>kepuasan pelanggan sudah meningkat</b>. Tapi masih belum sempurna, Ibunya masih merasa bersalah dan anaknya masih menangis." },
         { type: "blue", tag: "🔵 Engaged", csat: 20,
-          text: "Menghampiri sambil tersenyum dan berkata 'Tidak apa-apa, Ibu. Tenang saja, nanti kami bersihkan.', kemudian sigap bantu membersihkan lantai dan menghibur si anak.",
+          text: "Menghampiri sambil tersenyum dan berkata 'Gapapa, Bu. Tenang saja, nanti kami bersihkan.', kemudian sigap bantu membersihkan lantai dan menghibur si anak.",
           dialogue: "Ibu Pelanggan: 'Ya ampun ramah sekali... tangisan anak saya juga langsung reda. Terima kasih banyak ya!'",
           rationale: "Rasa empati mengubah situasi krisis menjadi kesempatan untuk membangun loyalitas pelanggan.",
           ferdi: "Luar biasa, {s} {n}! Kamu memilih <b>Engaged</b>: Menenangkan Ibunya, membersihkan lantai, sekaligus menghibur si anak. <b>Kepuasan pelanggan meningkat</b> karena sudah dibantu dan ditenangkan." }
